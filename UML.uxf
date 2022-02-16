@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>410</x>
+      <y>290</y>
+      <w>210</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>DragQueen
+--
+-belongsTo: Show
+-dragName: String
+-realName: String
+-age: int
+-gender: String
+-homeTown: String
+-salary: double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>290</y>
+      <w>210</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Show
+--
+-name String
+-location: String
+-date: LocalDate
+-kidsFriendly: boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>240</x>
+      <y>330</y>
+      <w>190</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Peforms in
+m1=1
+m2=0..n</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+</diagram>
