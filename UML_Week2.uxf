@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1251</x>
+      <y>306</y>
+      <w>189</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>DragQueen
+--
+-belongsTo: Show
+-dragName: String
+-realName: String
+-age: int
+-gender: String
+-homeTown: String
+-salary: double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>954</x>
+      <y>306</y>
+      <w>189</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Show
+--
+-name: String
+-location: String
+-date: LocalDate
+-kidsFriendly: boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1134</x>
+      <y>342</y>
+      <w>135</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Peforms in
+m1=1
+m2=0..n</panel_attributes>
+    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>315</x>
+      <y>225</y>
+      <w>189</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;javafx.application&gt;&gt;
+Application</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>315</x>
+      <y>306</y>
+      <w>189</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>MainApplication
+--
+-TITLE: string
+-WIDTH: int
+-HEIGHT: int
+--
++start(stage: Stage): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>315</x>
+      <y>441</y>
+      <w>189</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Main
+--
++main(args: String[]): void
+-showTegridy(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>639</x>
+      <y>306</y>
+      <w>189</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;views&gt;&gt;
+View
+--
+-root: Parent
+--
+#initializeView(): Parent
++getRoot(): Parent</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>441</y>
+      <w>189</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;views&gt;&gt;
+SowView
+--
+-dragNameTextField: TextField
+-nameTextField: TextField
+-ageTextField: TextField
+-genderTextField: TextField
+-homeTownTextField: TextField
+-salaryTextField: TextField
+-bioTextArea: TextArea
+-partOfComboBox: ComboBox
+--
+#initializeView(): Parent</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>396</x>
+      <y>261</y>
+      <w>27</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>396</x>
+      <y>387</y>
+      <w>27</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>495</x>
+      <y>342</y>
+      <w>162</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>160.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>621</x>
+      <y>387</y>
+      <w>90</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>765</x>
+      <y>387</y>
+      <w>90</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>747</x>
+      <y>441</y>
+      <w>189</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;views&gt;&gt;
+DragQueenView
+--
+-nameTextField: TextField
+-locationTextField: TextField
+-datePicker: DatePicker
+-checkbox: CheckBox
+-newButton: Button
+-deleteButton: Button
+-seeDetailButton: Button
+--
+#initializeView(): Parent</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

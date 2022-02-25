@@ -4,7 +4,6 @@ import javafx.application.Application;
 import java.time.LocalDate;
 
 public class Main {
-
     public static String studentNaam = "Frank van der Velde";
     public static String studentNummer = "500874906";
     private static boolean jaIkAccepteer = true;

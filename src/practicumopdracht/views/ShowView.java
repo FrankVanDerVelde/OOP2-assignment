@@ -1,52 +1,85 @@
-package views;
+package practicumopdracht.views;
 
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
 
 public class ShowView extends View {
+
+    private TextField nameTextField;
+    private TextField locationTextField;
+    private DatePicker datePicker;
+    private CheckBox checkbox;
+
+    private Button newButton;
+    private Button deleteButton;
+    private Button seeDetailButton;
+
     @Override
     protected void initializeView() {
+        VBox vbox = new VBox();
+        HBox hbox = new HBox();
+        GridPane gridpane = new GridPane();
 
+        vbox.setSpacing(10);
+        vbox.setPadding(new Insets(5, 5, 5, 15));
+        hbox.setSpacing(10);
+        gridpane.setVgap(10);
+
+        Label nameLabel = new Label("Name");
+        nameTextField=new TextField();
+
+        Label locationLabel = new Label("Location");
+        locationTextField=new TextField();
+
+        Label dateLabel = new Label("Date");
+        datePicker = new DatePicker();
+
+        Label labelLocation = new Label("Kids friendly?");
+        checkbox = new CheckBox();
+
+        newButton = new Button("New");
+        deleteButton = new Button("Delete");
+        seeDetailButton = new Button("See detail");
+
+        gridpane.add(nameLabel, 1, 1);
+        gridpane.add(nameTextField, 2, 1);
+        gridpane.add(locationLabel, 1, 2);
+        gridpane.add(locationTextField, 2, 2);
+        gridpane.add(dateLabel, 1, 3);
+        gridpane.add(datePicker, 2, 3);
+        gridpane.add(labelLocation, 1, 4);
+        gridpane.add(checkbox, 2, 4);
+
+        ListView showList = new ListView();
+
+        showList.getItems().add("Item 1");
+        showList.getItems().add("Item 2");
+        showList.getItems().add("Item 3");
+
+        hbox.getChildren().addAll(
+                newButton,
+                deleteButton,
+                seeDetailButton
+        );
+
+        vbox.getChildren().addAll(
+                gridpane,
+                showList,
+                hbox
+        );
+
+        root = vbox;
     }
 
-
-//    public void start(Stage primaryStage) {
-//        HBox hbox = new HBox();
-//        hbox.setSpacing(15);
-//        hbox.setAlignment(Pos.CENTER);
-//
-//        Circle circle1 = new Circle(15, Color.RED);
-//        circle1.setStroke(Color.BLACK);
-//
-//        Circle circle2 = new Circle(15, Color.GREEN);
-//        circle2.setStroke(Color.BLACK);
-//
-//        Circle circle3 = new Circle(15, Color.BLUE);
-//        circle3.setStroke(Color.BLACK);
-//
-//        hbox.getChildren().addAll(circle1, circle2, circle3);
-//
-//        VBox vbox = new VBox();
-//        vbox.setSpacing(15);
-//        vbox.setAlignment(Pos.CENTER);
-//
-//        Circle circle4 = new Circle(15, Color.YELLOW);
-//        circle4.setStroke(Color.BLACK);
-//
-//        Circle circle5 = new Circle(15, Color.PURPLE);
-//        circle5.setStroke(Color.BLACK);
-//
-//        vbox.getChildren().addAll(circle4, hbox, circle5);
-//
-//        Scene scene = new Scene(vbox, 320, 240);
-//
-//        primaryStage.setScene(scene);
-//        primaryStage.setTitle("JavaFX - Week 2");
-//        primaryStage.show();
+//    public Label getLabel() {
+//        return label;
 //    }
+//
+//    public Button getButton() {
+//        return button;
+//    }
+
 }

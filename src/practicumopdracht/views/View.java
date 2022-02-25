@@ -1,12 +1,11 @@
-package views;
+package practicumopdracht.views;
 
 import javafx.scene.Parent;
 
 public abstract class View {
-    private Parent root;
+    protected Parent root;
 
     public View() {
-//        this.root = initializeView();
         initializeView();
     }
 

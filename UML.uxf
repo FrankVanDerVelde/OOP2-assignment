@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>10</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>410</x>
-      <y>290</y>
-      <w>210</w>
-      <h>140</h>
+      <x>420</x>
+      <y>210</y>
+      <w>147</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>DragQueen
 --
@@ -23,10 +23,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>40</x>
-      <y>290</y>
-      <w>210</w>
-      <h>140</h>
+      <x>161</x>
+      <y>210</y>
+      <w>147</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>Show
 --
@@ -39,15 +39,100 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>240</x>
-      <y>330</y>
-      <w>190</w>
-      <h>50</h>
+      <x>301</x>
+      <y>238</y>
+      <w>133</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 Peforms in
 m1=1
 m2=0..n</panel_attributes>
     <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>126</x>
+      <y>336</y>
+      <w>147</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt; javafx.application &gt;&gt;
+Application</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>126</x>
+      <y>399</y>
+      <w>147</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>MainApplication
+--
+-TITLE: string
+-WIDTH: int
+-HEIGHT: int
+--
++start(stage: Stage): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>126</x>
+      <y>476</y>
+      <w>147</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Main
+--
++main(args: String[]): void
+-showTegridy(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>378</x>
+      <y>399</y>
+      <w>147</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>_object: Class_
+--
+id: Long="36548"
+[waiting for message]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>301</x>
+      <y>476</y>
+      <w>147</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>_object: Class_
+--
+id: Long="36548"
+[waiting for message]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>455</x>
+      <y>476</y>
+      <w>147</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>_object: Class_
+--
+id: Long="36548"
+[waiting for message]</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
