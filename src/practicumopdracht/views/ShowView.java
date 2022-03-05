@@ -6,6 +6,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
+
 public class ShowView extends View {
 
     private TextField nameTextField;
@@ -14,8 +16,10 @@ public class ShowView extends View {
     private CheckBox checkbox;
 
     private Button newButton;
+    private Button editButton;
     private Button deleteButton;
     private Button seeDetailButton;
+    private Button saveButton;
 
     @Override
     protected void initializeView() {
@@ -28,21 +32,23 @@ public class ShowView extends View {
         hbox.setSpacing(10);
         gridpane.setVgap(10);
 
-        Label nameLabel = new Label("Name");
+        Label nameLabel = new Label("Name*");
         nameTextField=new TextField();
 
-        Label locationLabel = new Label("Location");
+        Label locationLabel = new Label("Location*");
         locationTextField=new TextField();
 
-        Label dateLabel = new Label("Date");
+        Label dateLabel = new Label("Date*");
         datePicker = new DatePicker();
 
         Label labelLocation = new Label("Kids friendly?");
         checkbox = new CheckBox();
 
         newButton = new Button("New");
+        editButton = new Button("Edit");
         deleteButton = new Button("Delete");
         seeDetailButton = new Button("See detail");
+        saveButton = new Button("Save");
 
         gridpane.add(nameLabel, 1, 1);
         gridpane.add(nameTextField, 2, 1);
@@ -61,8 +67,10 @@ public class ShowView extends View {
 
         hbox.getChildren().addAll(
                 newButton,
+                editButton,
                 deleteButton,
-                seeDetailButton
+                seeDetailButton,
+                saveButton
         );
 
         vbox.getChildren().addAll(
@@ -74,12 +82,42 @@ public class ShowView extends View {
         root = vbox;
     }
 
-//    public Label getLabel() {
-//        return label;
-//    }
-//
-//    public Button getButton() {
-//        return button;
-//    }
 
+    // Button getters
+    public Button getNewButton() {
+        return newButton;
+    }
+
+    public Button getEditButton() {
+        return editButton;
+    }
+
+    public Button getSaveButton() {
+        return saveButton;
+    }
+
+    public Button getDeleteButton() {
+        return deleteButton;
+    }
+
+    public Button getSeeDetailButton() {
+        return seeDetailButton;
+    }
+
+    // Field getters
+    public TextField getNameTextField() {
+        return nameTextField;
+    }
+
+    public TextField getLocationTextField() {
+        return locationTextField;
+    }
+
+    public DatePicker getDatePicker() {
+        return datePicker;
+    }
+
+    public CheckBox getCheckbox() {
+        return checkbox;
+    }
 }

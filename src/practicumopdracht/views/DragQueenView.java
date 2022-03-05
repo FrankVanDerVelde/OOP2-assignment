@@ -5,6 +5,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import practicumopdracht.models.Show;
+
+import java.time.LocalDate;
 
 public class DragQueenView extends View {
 
@@ -20,8 +23,10 @@ public class DragQueenView extends View {
 
     // Controls
     private Button newButton;
+    private Button editButton;
     private Button deleteButton;
     private Button backButton;
+    private Button saveButton;
 
     @Override
     protected void initializeView() {
@@ -36,11 +41,13 @@ public class DragQueenView extends View {
 
         Label partOfLabel = new Label("Part of");
         partOfComboBox = new ComboBox();
-        partOfComboBox.getItems().addAll("Show 1", "Show 2", "Show 3", "Show 4", "Show 5");
+        partOfComboBox.getItems().addAll(new Show("Show 1", "Amsterdam", LocalDate.now(), true));
 
         newButton = new Button("New");
+        editButton = new Button("Edit");
         deleteButton = new Button("Delete");
         backButton = new Button("Back to overview");
+        saveButton = new Button("Save");
 
         Label dragNameLabel = new Label("Drag name");
         dragNameTextField = new TextField();
@@ -88,8 +95,10 @@ public class DragQueenView extends View {
 
         hbox.getChildren().addAll(
                 newButton,
+                editButton,
                 deleteButton,
-                backButton
+                backButton,
+                saveButton
         );
 
         vbox.getChildren().addAll(
@@ -113,4 +122,60 @@ public class DragQueenView extends View {
 
         root = vbox;
     }
+
+    // Button getters
+    public Button getNewButton() {
+        return newButton;
+    }
+
+    public Button getEditButton() {
+        return editButton;
+    }
+
+    public Button getDeleteButton() {
+        return deleteButton;
+    }
+
+    public Button getBackButton() {
+        return backButton;
+    }
+
+    public Button getSaveButton() {
+        return saveButton;
+    }
+
+    // Form field getters
+
+    public TextField getDragNameTextField() {
+        return dragNameTextField;
+    }
+
+    public TextField getNameTextField() {
+        return nameTextField;
+    }
+
+    public TextField getAgeTextField() {
+        return ageTextField;
+    }
+
+    public TextField getGenderTextField() {
+        return genderTextField;
+    }
+
+    public TextField getHomeTownTextField() {
+        return homeTownTextField;
+    }
+
+    public TextField getSalaryTextField() {
+        return salaryTextField;
+    }
+
+    public TextArea getBioTextArea() {
+        return bioTextArea;
+    }
+
+    public ComboBox getPartOfComboBox() {
+        return partOfComboBox;
+    }
+
 }

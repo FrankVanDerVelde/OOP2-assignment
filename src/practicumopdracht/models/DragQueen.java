@@ -8,4 +8,29 @@ public class DragQueen {
     String gender;
     String homeTown;
     double salary;
+    String bio;
+
+    public DragQueen(Show belongsTo, String dragName, String realName, int age, String gender, String homeTown, double salary, String bio) {
+        this.belongsTo = belongsTo;
+        this.dragName = dragName;
+        this.realName = realName;
+        this.age = age;
+        this.gender = gender;
+        this.homeTown = homeTown;
+        this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Added a new Drag Queen with the values:");
+        sb.append("Part of show: ").append(belongsTo.toString()).append('\n');
+        sb.append("Drag name: ").append(dragName).append('\n');
+        sb.append("Real name: ").append(realName).append('\n');
+        sb.append("Age: ").append(age).append('\n');
+        sb.append("Gender: ").append(gender).append('\n');
+        sb.append("Home town: ").append(homeTown).append('\n');
+        sb.append("Salary: ").append(salary).append('\n');
+        sb.append("Bio: ").append(bio).append('\n');
+        return sb.toString();
+    }
 }

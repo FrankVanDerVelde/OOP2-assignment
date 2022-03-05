@@ -4,12 +4,13 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1288</x>
-      <y>256</y>
+      <x>464</x>
+      <y>536</y>
       <w>168</w>
-      <h>112</h>
+      <h>136</h>
     </coordinates>
-    <panel_attributes>DragQueen
+    <panel_attributes>&lt;&lt;models&gt;&gt;
+DragQueen
 --
 -belongsTo: Show
 -dragName: String
@@ -17,18 +18,20 @@
 -age: int
 -gender: String
 -homeTown: String
--salary: double</panel_attributes>
+-salary: double
+-bio: String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1024</x>
-      <y>256</y>
+      <x>272</x>
+      <y>536</y>
       <w>168</w>
-      <h>80</h>
+      <h>88</h>
     </coordinates>
-    <panel_attributes>Show
+    <panel_attributes>&lt;&lt;models&gt;&gt;
+Show
 --
 -name: String
 -location: String
@@ -37,26 +40,12 @@
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1184</x>
-      <y>288</y>
-      <w>120</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-Peforms in
-m1=1
-m2=0..n</panel_attributes>
-    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>672</x>
+      <x>576</x>
       <y>112</y>
       <w>168</w>
-      <h>40</h>
+      <h>32</h>
     </coordinates>
     <panel_attributes>&lt;&lt;javafx.application&gt;&gt;
 Application</panel_attributes>
@@ -65,10 +54,10 @@ Application</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>672</x>
+      <x>576</x>
       <y>160</y>
       <w>168</w>
-      <h>56</h>
+      <h>48</h>
     </coordinates>
     <panel_attributes>Main
 --
@@ -80,7 +69,7 @@ Application</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>744</x>
-      <y>256</y>
+      <y>232</y>
       <w>168</w>
       <h>80</h>
     </coordinates>
@@ -96,8 +85,8 @@ View
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>656</x>
-      <y>376</y>
+      <x>648</x>
+      <y>344</y>
       <w>168</w>
       <h>168</h>
     </coordinates>
@@ -119,32 +108,32 @@ SowView
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>728</x>
-      <y>328</y>
-      <w>80</w>
-      <h>64</h>
+      <x>720</x>
+      <y>304</y>
+      <w>88</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>80.0;10.0;10.0;60.0</additional_attributes>
+    <additional_attributes>90.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>856</x>
-      <y>328</y>
-      <w>80</w>
-      <h>64</h>
+      <x>840</x>
+      <y>304</y>
+      <w>88</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;80.0;60.0</additional_attributes>
+    <additional_attributes>10.0;10.0;90.0;50.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>840</x>
-      <y>376</y>
+      <x>832</x>
+      <y>344</y>
       <w>168</w>
-      <h>144</h>
+      <h>152</h>
     </coordinates>
     <panel_attributes>&lt;&lt;views&gt;&gt;
 DragQueenView
@@ -163,7 +152,7 @@ DragQueenView
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>616</x>
+      <x>520</x>
       <y>120</y>
       <w>72</w>
       <h>24</h>
@@ -174,7 +163,7 @@ DragQueenView
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>616</x>
+      <x>520</x>
       <y>184</y>
       <w>72</w>
       <h>24</h>
@@ -185,7 +174,7 @@ DragQueenView
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>456</x>
+      <x>360</x>
       <y>112</y>
       <w>168</w>
       <h>104</h>
@@ -204,17 +193,18 @@ _+switchController(controller: controller): void_</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>312</x>
-      <y>288</y>
+      <x>272</x>
+      <y>344</y>
       <w>168</w>
-      <h>152</h>
+      <h>168</h>
     </coordinates>
     <panel_attributes>&lt;&lt;controllers&gt;&gt;
 ShowController
 --
 -view: ShowView
+-private confirmationAlert: Alert
 --
-+ public SHowController():
++ public ShowController():
 - handleSwitchScreen(): void
 - handleEdit(): void
 - handleNew(): void
@@ -224,5 +214,110 @@ ShowController
 +getView(): View
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>464</x>
+      <y>344</y>
+      <w>168</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;controllers&gt;&gt;
+ShowController
+--
+-view: ShowView
+-private confirmationAlert: Alert
+--
++ public ShowController():
+- handleSwitchScreen(): void
+- handleEdit(): void
+- handleNew(): void
+- handleDelete(): void
+- handleSave(): void
+-clearFields(): void;
++getView(): View
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>360</x>
+      <y>248</y>
+      <w>168</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;controllers&gt;&gt;
+Controller
+--
++getView():View</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>432</x>
+      <y>208</y>
+      <w>24</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>464</x>
+      <y>288</y>
+      <w>104</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>344</x>
+      <y>288</y>
+      <w>96</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>344</x>
+      <y>504</y>
+      <w>24</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>536</x>
+      <y>504</y>
+      <w>24</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>520</x>
+      <y>264</y>
+      <w>240</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>280.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
