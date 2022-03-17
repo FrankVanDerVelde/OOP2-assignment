@@ -1,6 +1,5 @@
 package practicumopdracht.controllers;
 
-import javafx.scene.control.Alert;
 import practicumopdracht.models.Show;
 import practicumopdracht.views.ShowView;
 import practicumopdracht.views.View;
@@ -13,12 +12,10 @@ public class ShowController extends Controller {
 
     private ShowView view;
 
-    private Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-
     public ShowController() {
     view = new ShowView();
 
-    view.getSeeDetailButton().setOnAction(actionEvent -> handleSwitchScreen());
+        view.getSeeDetailButton().setOnAction(actionEvent -> handleSwitchScreen());
 
         view.getEditButton().setOnAction(actionEvent -> handleEdit());
         view.getNewButton().setOnAction(actionEvent -> handleNew());
@@ -31,18 +28,15 @@ public class ShowController extends Controller {
     }
 
     private void handleEdit() {
-        confirmationAlert.setContentText("Edit clicked");
-        confirmationAlert.show();
+        useAlert("confirm", "Edit clicked");
     }
 
     private void handleNew() {
-        confirmationAlert.setContentText("New clicked");
-        confirmationAlert.show();
+        useAlert("confirm", "New clicked");
     }
 
     private void handleDelete() {
-        confirmationAlert.setContentText("Delete clicked");
-        confirmationAlert.show();
+        useAlert("confirm", "Delete clicked");
     }
 
     private void handleSave() {
@@ -54,12 +48,12 @@ public class ShowController extends Controller {
         LocalDate date = view.getDatePicker().getValue();
         Boolean kidsFriendly = view.getCheckbox().isSelected();
 
-        if (name == null || name.replaceAll("\\s+","").length() == 0) {
+        if (name.replaceAll("\\s+","").length() == 0) {
             alertString.append("- Name is required \n");
             valid = false;
         }
 
-        if (location == null || location.replaceAll("\\s+","").length() == 0) {
+        if (location.replaceAll("\\s+","").length() == 0) {
             alertString.append("- Location is required \n");
             valid = false;
         }
@@ -75,16 +69,11 @@ public class ShowController extends Controller {
         }
 
         if (valid == false) {
-            Alert validationAlert = new Alert(Alert.AlertType.WARNING);
-            validationAlert.setContentText(alertString.toString());
-            validationAlert.show();
+            useAlert("warn", alertString.toString());
         } else {
-            Alert succesAlert = new Alert(Alert.AlertType.INFORMATION);
-
             Show dragShow = new Show(name, location, date, kidsFriendly);
 
-            succesAlert.setContentText(dragShow.toString());
-            succesAlert.show();
+            useAlert("inform", dragShow.toString());
 
             clearFields();
         }

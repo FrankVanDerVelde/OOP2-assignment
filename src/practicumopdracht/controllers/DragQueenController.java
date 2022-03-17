@@ -1,7 +1,6 @@
 package practicumopdracht.controllers;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import practicumopdracht.models.DragQueen;
 import practicumopdracht.models.Show;
@@ -15,8 +14,6 @@ import static practicumopdracht.MainApplication.switchController;
 public class DragQueenController extends Controller {
 
     private DragQueenView view;
-
-    private Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
 
     public DragQueenController() {
         view = new DragQueenView();
@@ -33,18 +30,15 @@ public class DragQueenController extends Controller {
     }
 
     private void handleEdit() {
-        confirmationAlert.setContentText("Edit clicked");
-        confirmationAlert.show();
+        useAlert("confirm", "Edit clicked");
     }
 
     private void handleNew() {
-        confirmationAlert.setContentText("New clicked");
-        confirmationAlert.show();
+        useAlert("confirm", "New clicked");
     }
 
     private void handleDelete() {
-        confirmationAlert.setContentText("Delete clicked");
-        confirmationAlert.show();
+        useAlert("confirm", "Delete clicked");
     }
 
     private void handleSave() {
@@ -62,16 +56,15 @@ public class DragQueenController extends Controller {
 
 //        Boolean kidsFriendly = view.getCheckbox().isSelected();
 
-        if (dragName == null || dragName.replaceAll("\\s+","").length() == 0) {
+        if (dragName.replaceAll("\\s+","").length() == 0) {
             alertString.append("- Drag name is requires \n");
             valid = false;
         }
 
-        if (realName == null || realName.replaceAll("\\s+","").length() == 0) {
+        if (realName.replaceAll("\\s+","").length() == 0) {
             alertString.append("- Location is required \n");
             valid = false;
         }
-
 
             try {
                 int num = Integer.parseInt(age);
@@ -89,16 +82,11 @@ public class DragQueenController extends Controller {
 
 
         if (valid == false) {
-            Alert validationAlert = new Alert(Alert.AlertType.WARNING);
-            validationAlert.setContentText(alertString.toString());
-            validationAlert.show();
+            useAlert("warn", alertString.toString());
         } else {
-            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-
             DragQueen dragQueen = new DragQueen(show, dragName, realName, Integer.parseInt(age), gender, homeTown, Double.parseDouble(salary), bio);
 
-            successAlert.setContentText(dragQueen.toString());
-            successAlert.show();
+            useAlert("inform", dragQueen.toString());
 
             clearFields();
         }

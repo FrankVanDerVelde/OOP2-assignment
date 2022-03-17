@@ -5,8 +5,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import practicumopdracht.MainApplication;
+import practicumopdracht.models.Show;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ShowView extends View {
 
@@ -20,6 +23,8 @@ public class ShowView extends View {
     private Button deleteButton;
     private Button seeDetailButton;
     private Button saveButton;
+
+    List<Show> shows = MainApplication.getShowDAO().getAll();
 
     @Override
     protected void initializeView() {
@@ -61,10 +66,6 @@ public class ShowView extends View {
 
         ListView showList = new ListView();
 
-        showList.getItems().add("Item 1");
-        showList.getItems().add("Item 2");
-        showList.getItems().add("Item 3");
-
         hbox.getChildren().addAll(
                 newButton,
                 editButton,
@@ -81,7 +82,6 @@ public class ShowView extends View {
 
         root = vbox;
     }
-
 
     // Button getters
     public Button getNewButton() {
@@ -119,5 +119,11 @@ public class ShowView extends View {
 
     public CheckBox getCheckbox() {
         return checkbox;
+    }
+
+    // Set combobox
+
+    public void setShows(ListView<Show> shows) {
+        this.show = shows;
     }
 }

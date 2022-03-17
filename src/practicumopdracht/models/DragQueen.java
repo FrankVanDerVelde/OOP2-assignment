@@ -33,4 +33,8 @@ public class DragQueen {
         sb.append("Bio: ").append(bio).append('\n');
         return sb.toString();
     }
+
+    public Show getBelongsTo() {
+        return belongsTo;
+    }
 }
