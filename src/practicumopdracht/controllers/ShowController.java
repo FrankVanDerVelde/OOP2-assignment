@@ -1,16 +1,21 @@
 package practicumopdracht.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import practicumopdracht.MainApplication;
 import practicumopdracht.models.Show;
 import practicumopdracht.views.ShowView;
 import practicumopdracht.views.View;
 
 import java.time.LocalDate;
 
-import static practicumopdracht.MainApplication.switchController;
+import static practicumopdracht.MainApplication.*;
+import static practicumopdracht.MainApplication.selectedShow;
 
 public class ShowController extends Controller {
 
     private ShowView view;
+    private ObservableList<Show> showObservableList;
 
     public ShowController() {
     view = new ShowView();
@@ -21,10 +26,18 @@ public class ShowController extends Controller {
         view.getNewButton().setOnAction(actionEvent -> handleNew());
         view.getDeleteButton().setOnAction(actionEvent -> handleDelete());
         view.getSaveButton().setOnAction(actionEvent -> handleSave());
+        view.getShowList().setOnMouseClicked(onMouseClickedProperty -> handleListClick());
+
+        setListView();
     }
 
     private void handleSwitchScreen() {
-        switchController(new DragQueenController());
+        Show selectedShow = view.getShowList().getSelectionModel().getSelectedItem();
+        System.out.println(selectedShow);
+        if (selectedShow != null) {
+            MainApplication.selectedShow = selectedShow;
+            switchController(new DragQueenController());
+        }
     }
 
     private void handleEdit() {
@@ -73,6 +86,15 @@ public class ShowController extends Controller {
         } else {
             Show dragShow = new Show(name, location, date, kidsFriendly);
 
+            Show show = view.getShowList().getSelectionModel().getSelectedItem();
+
+            show.setName(name);
+            show.setLocation(location);
+            show.setDate(date);
+            show.setKidsFriendly(kidsFriendly);
+
+            view.getShowList().refresh();
+
             useAlert("inform", dragShow.toString());
 
             clearFields();
@@ -84,6 +106,26 @@ public class ShowController extends Controller {
         view.getLocationTextField().clear();
         view.getDatePicker().setValue(null);
         view.getCheckbox().setSelected(false);
+    }
+
+    private void handleListClick() {
+        Show selectedShow = view.getShowList().getSelectionModel().getSelectedItem();
+        MainApplication.selectedShow = selectedShow;
+        if(selectedShow != null) {
+
+            view.setNameTextField(selectedShow.getName());
+            view.setLocationTextField(selectedShow.getLocation());
+            view.setDatePicker(selectedShow.getDate());
+            view.setCheckbox(selectedShow.getIsKidsFriendly());
+        }
+    }
+
+    /**
+     * Set de listview
+     */
+    private void setListView(){
+        showObservableList = FXCollections.observableArrayList(getShowDAO().getAll());
+        view.getShowList().setItems(showObservableList);
     }
 
     @Override

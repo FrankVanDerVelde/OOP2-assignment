@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import practicumopdracht.models.DragQueen;
 import practicumopdracht.models.Show;
 
 import java.time.LocalDate;
@@ -12,14 +13,30 @@ import java.time.LocalDate;
 public class DragQueenView extends View {
 
     // Labels and their inputs
+    private Label dragNameLabel;
     private TextField dragNameTextField;
+
+    private Label nameLabel;
     private TextField nameTextField;
+
+    private Label ageLabel;
     private TextField ageTextField;
+
+    private Label genderLabel;
     private TextField genderTextField;
+
+    private Label homeTownLabel;
     private TextField homeTownTextField;
+
+    private Label salaryLabel;
     private TextField salaryTextField;
+
+    private Label bioLabel;
     private TextArea bioTextArea;
+
     private ComboBox partOfComboBox;
+
+    private ListView<DragQueen> queenList;
 
     // Controls
     private Button newButton;
@@ -41,7 +58,7 @@ public class DragQueenView extends View {
 
         Label partOfLabel = new Label("Part of");
         partOfComboBox = new ComboBox();
-        partOfComboBox.getItems().addAll(new Show("Show 1", "Amsterdam", LocalDate.now(), true));
+//        partOfComboBox.getItems().addAll(new Show("Show 1", "Amsterdam", LocalDate.now(), true));
 
         newButton = new Button("New");
         editButton = new Button("Edit");
@@ -49,25 +66,25 @@ public class DragQueenView extends View {
         backButton = new Button("Back to overview");
         saveButton = new Button("Save");
 
-        Label dragNameLabel = new Label("Drag name");
+        dragNameLabel = new Label("Drag name");
         dragNameTextField = new TextField();
 
-        Label nameLabel = new Label("Real name");
+        nameLabel = new Label("Real name");
         nameTextField = new TextField();
 
-        Label ageLabel = new Label("Age");
+        ageLabel = new Label("Age");
         ageTextField = new TextField();
 
-        Label genderLabel = new Label("Gender");
+        genderLabel = new Label("Gender");
         genderTextField = new TextField();
 
-        Label homeTownLabel = new Label("Home Town");
+        homeTownLabel = new Label("Home Town");
         homeTownTextField = new TextField();
 
-        Label salaryLabel = new Label("Salary");
+        salaryLabel = new Label("Salary");
         salaryTextField = new TextField();
 
-        Label bioLabel = new Label("Bio");
+        bioLabel = new Label("Bio");
         bioTextArea = new TextArea();
 
         gridpane.add(partOfLabel, 1, 1);
@@ -87,11 +104,7 @@ public class DragQueenView extends View {
         gridpane.add(bioLabel, 1, 8);
         gridpane.add(bioTextArea, 2, 8);
 
-        ListView queenList = new ListView();
-
-        queenList.getItems().add("Item 1");
-        queenList.getItems().add("Item 2");
-        queenList.getItems().add("Item 3");
+        queenList = new ListView();
 
         hbox.getChildren().addAll(
                 newButton,
@@ -145,7 +158,6 @@ public class DragQueenView extends View {
     }
 
     // Form field getters
-
     public TextField getDragNameTextField() {
         return dragNameTextField;
     }
@@ -174,8 +186,63 @@ public class DragQueenView extends View {
         return bioTextArea;
     }
 
-    public ComboBox getPartOfComboBox() {
+    public ComboBox getComboBox() {
         return partOfComboBox;
     }
 
+    public ListView<DragQueen> getQueenList() {
+        return queenList;
+    }
+
+    // Form field setters
+    public void setDragNameTextField(String dragNameTextField) {
+        this.dragNameTextField.setText(dragNameTextField);
+    }
+
+    public void setNameTextField(String nameTextField) {
+        this.nameTextField.setText(nameTextField);
+    }
+
+    public void setAgeTextField(String ageTextField) {
+        this.ageTextField.setText(ageTextField);
+    }
+
+    public void setGenderTextField(String genderTextField) {
+        this.genderTextField.setText(genderTextField);
+    }
+
+    public void setHomeTownTextField(String homeTownTextField) {
+        this.homeTownTextField.setText(homeTownTextField);
+    }
+
+    public void setSalaryTextField(String salaryTextField) {
+        this.salaryTextField.setText(salaryTextField);
+    }
+
+    public void setBioTextArea(String bioTextArea) {
+        this.bioTextArea.setText(bioTextArea);
+    }
+
+    public void setPartOfComboBox(ComboBox partOfComboBox) {
+        this.partOfComboBox = partOfComboBox;
+    }
+
+
+
+
+//    public void setNameTextField(String name) {
+//        this.nameTextField.setText(name);
+//    }
+//
+//    public void setLocationTextField(String location) {
+//        this.locationTextField.setText(location);
+//    }
+//
+//    public void setDatePicker(LocalDate date) {
+//        this.datePicker.setValue(date);
+//    }
+//
+//    public void setCheckbox(Boolean kidsFriendly) {
+//        this.checkbox.setSelected(kidsFriendly);
+//    }
 }

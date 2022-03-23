@@ -18,6 +18,7 @@ public class DragQueen {
         this.gender = gender;
         this.homeTown = homeTown;
         this.salary = salary;
+        this.bio = bio;
     }
 
     @Override
@@ -34,7 +35,36 @@ public class DragQueen {
         return sb.toString();
     }
 
+    public String getDragName() {
+        return dragName;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getHomeTown() {
+        return homeTown;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
     public Show getBelongsTo() {
         return belongsTo;
     }
+
 }

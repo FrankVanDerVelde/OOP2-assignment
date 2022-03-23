@@ -7,16 +7,19 @@ import practicumopdracht.controllers.Controller;
 import practicumopdracht.controllers.ShowController;
 import practicumopdracht.data.DragQueenDAO;
 import practicumopdracht.data.DummyDragQueenDAO;
-import practicumopdracht.data.DummyShowDao;
+import practicumopdracht.data.DummyShowDAO;
 import practicumopdracht.data.ShowDAO;
+import practicumopdracht.models.Show;
 
 public class MainApplication extends Application {
     private final String TITLE = String.format("Practicumopdracht OOP2 - %s", Main.studentNaam);
     private final int WIDTH = 640;
-    private final int HEIGHT = 480;
+    private final int HEIGHT = 600;
     static final Stage stage = new Stage();
     private static ShowDAO showDAO;
     private static DragQueenDAO dragQueenDAO;
+
+    public static Show selectedShow;
 
     @Override
     public void start(Stage stage) {
@@ -28,8 +31,12 @@ public class MainApplication extends Application {
             return;
         }
 
+        MainApplication.showDAO = new DummyShowDAO();
+
         MainApplication.dragQueenDAO = new DummyDragQueenDAO();
-        MainApplication.showDAO = new DummyShowDao();
+
+        showDAO.load();
+        dragQueenDAO.load();
 
         MainApplication.stage.setTitle(TITLE);
         MainApplication.stage.setWidth(WIDTH);

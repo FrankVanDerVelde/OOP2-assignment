@@ -2,11 +2,16 @@ package practicumopdracht.data;
 
 import practicumopdracht.models.Show;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShowDAO implements DAO<Show> {
 
     protected List<Show> objects;
+
+    public ShowDAO() {
+        objects = new ArrayList<>();
+    }
 
     public Show getById(int id) {
         return objects.get(id);

@@ -3,12 +3,17 @@ package practicumopdracht.data;
 import practicumopdracht.models.DragQueen;
 import practicumopdracht.models.Show;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class DragQueenDAO implements DAO<DragQueen> {
 
     protected List<DragQueen> objects;
+
+    public DragQueenDAO() {
+        objects = new ArrayList<>();
+    }
 
     public int getById(int id) {
         return 0;
@@ -18,7 +23,6 @@ public class DragQueenDAO implements DAO<DragQueen> {
         return objects.stream().filter(dragQueen -> (dragQueen.getBelongsTo() == object)).collect(Collectors.toList());
     }
 
-
     @Override
     public List<DragQueen> getAll() {
         return objects;
@@ -26,7 +30,9 @@ public class DragQueenDAO implements DAO<DragQueen> {
 
     @Override
     public void addOrUpdate(DragQueen object) {
-
+        if (!objects.contains(object)) {
+            objects.add(object);
+        }
     }
 
     @Override

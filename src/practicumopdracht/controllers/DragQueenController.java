@@ -1,7 +1,11 @@
 package practicumopdracht.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import practicumopdracht.MainApplication;
 import practicumopdracht.models.DragQueen;
 import practicumopdracht.models.Show;
 import practicumopdracht.views.DragQueenView;
@@ -9,20 +13,27 @@ import practicumopdracht.views.View;
 
 import java.time.LocalDate;
 
-import static practicumopdracht.MainApplication.switchController;
+import static practicumopdracht.MainApplication.*;
 
 public class DragQueenController extends Controller {
 
     private DragQueenView view;
+    private ComboBox comboBox;
+    private ObservableList<DragQueen> showObservableList;
 
     public DragQueenController() {
         view = new DragQueenView();
+        comboBox = view.getComboBox();
 
         view.getBackButton().setOnAction(actionEvent -> handleSwitchScreen());
         view.getEditButton().setOnAction(actionEvent -> handleEdit());
         view.getNewButton().setOnAction(actionEvent -> handleNew());
         view.getDeleteButton().setOnAction(actionEvent -> handleDelete());
         view.getSaveButton().setOnAction(actionEvent -> handleSave());
+        view.getQueenList().setOnMouseClicked(onMouseClickedProperty -> handleListClick());
+
+        setComboBox();
+        setListView();
     }
 
     private void handleSwitchScreen() {
@@ -52,7 +63,7 @@ public class DragQueenController extends Controller {
         String homeTown = view.getHomeTownTextField().getText();
         String salary = view.getSalaryTextField().getText();
         String bio = view.getBioTextArea().getText();
-        Show show = (Show) view.getPartOfComboBox().getValue();
+        Show show = (Show) comboBox.getValue();
 
 //        Boolean kidsFriendly = view.getCheckbox().isSelected();
 
@@ -100,8 +111,33 @@ public class DragQueenController extends Controller {
         view.getHomeTownTextField().clear();
         view.getSalaryTextField().clear();
         view.getBioTextArea().clear();
-        view.getPartOfComboBox().setValue(null);
+        comboBox.setValue(null);
     }
+
+    private void handleListClick() {
+        DragQueen selectedQueen = view.getQueenList().getSelectionModel().getSelectedItem();
+        if(selectedShow != null) {
+
+            view.setDragNameTextField(selectedQueen.getDragName());
+            view.setNameTextField(selectedQueen.getRealName());
+            view.setAgeTextField(String.valueOf(selectedQueen.getAge()));
+            view.setGenderTextField(selectedQueen.getGender());
+            view.setHomeTownTextField(selectedQueen.getHomeTown());
+            view.setSalaryTextField(String.valueOf(selectedQueen.getSalary()));
+            view.setBioTextArea(selectedQueen.getBio());
+
+        }
+    }
+
+    private void setListView(){
+        showObservableList = FXCollections.observableArrayList(getDragQueenDAO().getAllFor(selectedShow));
+        view.getQueenList().setItems(showObservableList);
+    }
+
+    private void setComboBox(){
+        comboBox.getItems().addAll(MainApplication.getShowDAO().getAll());
+        comboBox.setValue(selectedShow);
+}
 
     @Override
     public View getView() {
