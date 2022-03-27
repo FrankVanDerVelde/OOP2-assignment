@@ -15,8 +15,8 @@ public class DragQueenDAO implements DAO<DragQueen> {
         objects = new ArrayList<>();
     }
 
-    public int getById(int id) {
-        return 0;
+    public DragQueen getById(int id) {
+        return objects.get(id);
     }
 
     public List<DragQueen> getAllFor(Show object) {

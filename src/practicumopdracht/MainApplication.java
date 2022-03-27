@@ -5,10 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import practicumopdracht.controllers.Controller;
 import practicumopdracht.controllers.ShowController;
-import practicumopdracht.data.DragQueenDAO;
-import practicumopdracht.data.DummyDragQueenDAO;
-import practicumopdracht.data.DummyShowDAO;
-import practicumopdracht.data.ShowDAO;
+import practicumopdracht.data.*;
 import practicumopdracht.models.Show;
 
 public class MainApplication extends Application {
@@ -31,12 +28,15 @@ public class MainApplication extends Application {
             return;
         }
 
-        MainApplication.showDAO = new DummyShowDAO();
+//        MainApplication.showDAO = new DummyShowDAO();
+//        MainApplication.dragQueenDAO = new DummyDragQueenDAO();
 
-        MainApplication.dragQueenDAO = new DummyDragQueenDAO();
+        MainApplication.showDAO = new TextShowDAO();
+MainApplication.dragQueenDAO = new TextDragQueenDAO();
 
-        showDAO.load();
-        dragQueenDAO.load();
+            dragQueenDAO.save();
+//        showDAO.load();
+//        dragQueenDAO.load();
 
         MainApplication.stage.setTitle(TITLE);
         MainApplication.stage.setWidth(WIDTH);

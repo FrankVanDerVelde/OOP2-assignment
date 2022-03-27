@@ -17,6 +17,16 @@ public class ShowDAO implements DAO<Show> {
         return objects.get(id);
     }
 
+    public int getIdFor(Show object) {
+        for (int i = 0; i < objects.size(); i++) {
+            Show show = objects.get(i);
+            if(show.equals(object)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     @Override
     public List<Show> getAll() {
         return objects;
