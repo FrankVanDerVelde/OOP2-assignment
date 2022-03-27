@@ -24,10 +24,9 @@ public class ShowView extends View {
     private CheckBox checkbox;
 
     private Button newButton;
-    private Button editButton;
     private Button deleteButton;
-    private Button seeDetailButton;
     private Button saveButton;
+    private Button seeDetailButton;
 
     private ListView<Show> showList;
 
@@ -55,7 +54,6 @@ public class ShowView extends View {
         checkbox = new CheckBox();
 
         newButton = new Button("New");
-        editButton = new Button("Edit");
         deleteButton = new Button("Delete");
         seeDetailButton = new Button("See detail");
         saveButton = new Button("Save");
@@ -73,10 +71,9 @@ public class ShowView extends View {
 
         hbox.getChildren().addAll(
                 newButton,
-                editButton,
                 deleteButton,
-                seeDetailButton,
-                saveButton
+                saveButton,
+                seeDetailButton
         );
 
         vbox.getChildren().addAll(
@@ -91,10 +88,6 @@ public class ShowView extends View {
     // Button getters
     public Button getNewButton() {
         return newButton;
-    }
-
-    public Button getEditButton() {
-        return editButton;
     }
 
     public Button getSaveButton() {

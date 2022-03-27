@@ -2,12 +2,19 @@ package practicumopdracht.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import practicumopdracht.MainApplication;
+import practicumopdracht.data.DAO;
+import practicumopdracht.data.DragQueenDAO;
+import practicumopdracht.models.DragQueen;
 import practicumopdracht.models.Show;
 import practicumopdracht.views.ShowView;
 import practicumopdracht.views.View;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static practicumopdracht.MainApplication.*;
 import static practicumopdracht.MainApplication.selectedShow;
@@ -16,19 +23,34 @@ public class ShowController extends Controller {
 
     private ShowView view;
     private ObservableList<Show> showObservableList;
+    private Show selectedShow;
+    private boolean newClicked;
+    private DAO<Show> showDAO;
+
+    private Button newButton;
+    private Button deleteButton;
+    private Button saveButton;
+    private Button detailButton;
 
     public ShowController() {
     view = new ShowView();
+    showDAO =  MainApplication.getShowDAO();
+        newClicked = true;
 
-        view.getSeeDetailButton().setOnAction(actionEvent -> handleSwitchScreen());
+        newButton = view.getNewButton();
+        deleteButton = view.getDeleteButton();
+        saveButton = view.getSaveButton();
+        detailButton = view.getSeeDetailButton();
 
-        view.getEditButton().setOnAction(actionEvent -> handleEdit());
-        view.getNewButton().setOnAction(actionEvent -> handleNew());
-        view.getDeleteButton().setOnAction(actionEvent -> handleDelete());
-        view.getSaveButton().setOnAction(actionEvent -> handleSave());
+        newButton.setOnAction(actionEvent -> handleNew());
+        deleteButton.setOnAction(actionEvent -> handleDelete());
+        saveButton.setOnAction(actionEvent -> handleSave());
+        detailButton.setOnAction(actionEvent -> handleSwitchScreen());
+
         view.getShowList().setOnMouseClicked(onMouseClickedProperty -> handleListClick());
 
         setListView();
+        toggleButtonStates();
     }
 
     private void handleSwitchScreen() {
@@ -40,20 +62,33 @@ public class ShowController extends Controller {
         }
     }
 
-    private void handleEdit() {
-        useAlert("confirm", "Edit clicked");
-    }
-
     private void handleNew() {
-        useAlert("confirm", "New clicked");
+        newClicked = true;
+        view.getShowList().getSelectionModel().clearSelection();
+        clearFields();
+        toggleButtonStates();
     }
 
     private void handleDelete() {
-        useAlert("confirm", "Delete clicked");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Are you sure you want to delete this show?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK){
+            DragQueenDAO dragQueenDAO = MainApplication.getDragQueenDAO();
+            dragQueenDAO.getAllFor(selectedShow).forEach(dragQueenDAO::remove);
+            showObservableList.remove(selectedShow);
+            showDAO.remove(selectedShow);
+            useAlert("inform", "Succesfully deleted show");
+        }
+        view.getShowList().getSelectionModel().clearSelection();
+        newClicked = true;
+        clearFields();
+        toggleButtonStates();
     }
 
     private void handleSave() {
-        Boolean valid = true;
+        Boolean inputFieldsValid = true;
         StringBuilder alertString = new StringBuilder();
 
         String name = view.getNameTextField().getText();
@@ -63,41 +98,43 @@ public class ShowController extends Controller {
 
         if (name.replaceAll("\\s+","").length() == 0) {
             alertString.append("- Name is required \n");
-            valid = false;
+            inputFieldsValid = false;
         }
 
         if (location.replaceAll("\\s+","").length() == 0) {
             alertString.append("- Location is required \n");
-            valid = false;
+            inputFieldsValid = false;
         }
 
         if (date == null) {
             alertString.append("- Date is required \n");
-            valid = false;
+            inputFieldsValid = false;
         } else {
             if (LocalDate.now().isAfter(date)) {
                 alertString.append("- Date has to be later than current date");
-                valid = false;
+                inputFieldsValid = false;
             }
         }
 
-        if (valid == false) {
+        if (inputFieldsValid == false) {
             useAlert("warn", alertString.toString());
         } else {
-            Show dragShow = new Show(name, location, date, kidsFriendly);
+            if (newClicked) {
+                Show showToAdd = new Show(name, location, date, kidsFriendly);
+                showObservableList.add(showToAdd);
 
-            Show show = view.getShowList().getSelectionModel().getSelectedItem();
+//                view.getShowList().refresh();
+                clearFields();
+                useAlert("inform", "Added a new show with the values: \n" + showToAdd);
 
-            show.setName(name);
-            show.setLocation(location);
-            show.setDate(date);
-            show.setKidsFriendly(kidsFriendly);
-
-            view.getShowList().refresh();
-
-            useAlert("inform", dragShow.toString());
-
-            clearFields();
+            } else {
+                selectedShow.setName(name);
+                selectedShow.setLocation(location);
+                selectedShow.setDate(date);
+                selectedShow.setKidsFriendly(kidsFriendly);
+                view.getShowList().refresh();
+                useAlert("inform", "Updated show");
+            }
         }
     }
 
@@ -109,7 +146,8 @@ public class ShowController extends Controller {
     }
 
     private void handleListClick() {
-        Show selectedShow = view.getShowList().getSelectionModel().getSelectedItem();
+        newClicked = false;
+        selectedShow = view.getShowList().getSelectionModel().getSelectedItem();
         MainApplication.selectedShow = selectedShow;
         if(selectedShow != null) {
 
@@ -118,6 +156,7 @@ public class ShowController extends Controller {
             view.setDatePicker(selectedShow.getDate());
             view.setCheckbox(selectedShow.getIsKidsFriendly());
         }
+        toggleButtonStates();
     }
 
     /**
@@ -126,6 +165,19 @@ public class ShowController extends Controller {
     private void setListView(){
         showObservableList = FXCollections.observableArrayList(getShowDAO().getAll());
         view.getShowList().setItems(showObservableList);
+    }
+
+    private void toggleButtonStates() {
+        if (view.getShowList().getSelectionModel().getSelectedItem() != null) {
+            newButton.setDisable(false);
+            deleteButton.setDisable(false);
+            detailButton.setDisable(false);
+
+        } else {
+            newButton.setDisable(true);
+            deleteButton.setDisable(true);
+            detailButton.setDisable(true);
+        }
     }
 
     @Override

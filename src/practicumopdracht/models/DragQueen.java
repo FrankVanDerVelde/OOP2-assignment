@@ -21,20 +21,6 @@ public class DragQueen {
         this.bio = bio;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Added a new Drag Queen with the values:");
-        sb.append("Part of show: ").append(belongsTo.toString()).append('\n');
-        sb.append("Drag name: ").append(dragName).append('\n');
-        sb.append("Real name: ").append(realName).append('\n');
-        sb.append("Age: ").append(age).append('\n');
-        sb.append("Gender: ").append(gender).append('\n');
-        sb.append("Home town: ").append(homeTown).append('\n');
-        sb.append("Salary: ").append(salary).append('\n');
-        sb.append("Bio: ").append(bio).append('\n');
-        return sb.toString();
-    }
-
     public String getDragName() {
         return dragName;
     }
@@ -67,4 +53,50 @@ public class DragQueen {
         return belongsTo;
     }
 
+    // setters
+    public void setBelongsTo(Show belongsTo) {
+        this.belongsTo = belongsTo;
+    }
+
+    public void setDragName(String dragName) {
+        this.dragName = dragName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setHomeTown(String homeTown) {
+        this.homeTown = homeTown;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("Part of show: ").append(belongsTo.toString()).append('\n');
+        sb.append("Drag name: ").append(dragName).append('\n');
+        sb.append("Real name: ").append(realName).append('\n');
+        sb.append("Age: ").append(age).append('\n');
+        sb.append("Gender: ").append(gender).append('\n');
+        sb.append("Home town: ").append(homeTown).append('\n');
+        sb.append("Salary: ").append(salary).append('\n');
+        sb.append("Bio: ").append(bio).append('\n');
+        return sb.toString();
+    }
 }

@@ -40,10 +40,9 @@ public class DragQueenView extends View {
 
     // Controls
     private Button newButton;
-    private Button editButton;
     private Button deleteButton;
-    private Button backButton;
     private Button saveButton;
+    private Button backButton;
 
     @Override
     protected void initializeView() {
@@ -61,7 +60,6 @@ public class DragQueenView extends View {
 //        partOfComboBox.getItems().addAll(new Show("Show 1", "Amsterdam", LocalDate.now(), true));
 
         newButton = new Button("New");
-        editButton = new Button("Edit");
         deleteButton = new Button("Delete");
         backButton = new Button("Back to overview");
         saveButton = new Button("Save");
@@ -108,10 +106,9 @@ public class DragQueenView extends View {
 
         hbox.getChildren().addAll(
                 newButton,
-                editButton,
                 deleteButton,
-                backButton,
-                saveButton
+                saveButton,
+                backButton
         );
 
         vbox.getChildren().addAll(
@@ -120,29 +117,12 @@ public class DragQueenView extends View {
                 hbox
         );
 
-//        UnaryOperator<Change> filter = change -> {
-//            String text = change.getText();
-//
-//            if (text.matches("[0-9]*")) {
-//                return change;
-//            }
-//
-//            return null;
-//        };
-//        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
-//        fieldNport = new TextField();
-//        fieldNport.setTextFormatter(textFormatter);
-
         root = vbox;
     }
 
     // Button getters
     public Button getNewButton() {
         return newButton;
-    }
-
-    public Button getEditButton() {
-        return editButton;
     }
 
     public Button getDeleteButton() {
@@ -223,26 +203,4 @@ public class DragQueenView extends View {
         this.bioTextArea.setText(bioTextArea);
     }
 
-    public void setPartOfComboBox(ComboBox partOfComboBox) {
-        this.partOfComboBox = partOfComboBox;
-    }
-
-
-
-
-//    public void setNameTextField(String name) {
-//        this.nameTextField.setText(name);
-//    }
-//
-//    public void setLocationTextField(String location) {
-//        this.locationTextField.setText(location);
-//    }
-//
-//    public void setDatePicker(LocalDate date) {
-//        this.datePicker.setValue(date);
-//    }
-//
-//    public void setCheckbox(Boolean kidsFriendly) {
-//        this.checkbox.setSelected(kidsFriendly);
-//    }
 }

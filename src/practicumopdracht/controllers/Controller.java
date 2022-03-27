@@ -7,7 +7,8 @@ public abstract class Controller {
 
     public abstract View getView();
 
-    public void useAlert(String type, String message) {
+    // Return the alert for other usage like confirmation results
+    public Alert useAlert(String type, String message) {
         Alert alert;
         switch(type) {
             case "confirm":
@@ -27,10 +28,11 @@ public abstract class Controller {
                 break;
             default:
                 alert = new Alert(Alert.AlertType.NONE);
-
         }
+
         alert.setContentText(message);
         alert.show();
+        return alert;
     }
 
 }

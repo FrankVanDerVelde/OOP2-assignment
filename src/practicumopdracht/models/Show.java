@@ -55,12 +55,10 @@ public class Show {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         String parsedDate = formatter.format(date);
-//        "Added a new show with the values:\n" +
         return(String.format(
                 "Name: %s" + "\n" +
                 "Location: %s" + "\n" +
                 "Date: %s" + "\n" +
                 "Kids friendly: %b", name, location, parsedDate, kidsFriendly));
     }
-
 }

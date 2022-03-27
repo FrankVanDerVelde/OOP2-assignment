@@ -2,16 +2,18 @@ package practicumopdracht.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import practicumopdracht.MainApplication;
+import practicumopdracht.data.DragQueenDAO;
 import practicumopdracht.models.DragQueen;
 import practicumopdracht.models.Show;
 import practicumopdracht.views.DragQueenView;
 import practicumopdracht.views.View;
 
-import java.time.LocalDate;
+import java.util.Optional;
 
 import static practicumopdracht.MainApplication.*;
 
@@ -19,37 +21,66 @@ public class DragQueenController extends Controller {
 
     private DragQueenView view;
     private ComboBox comboBox;
-    private ObservableList<DragQueen> showObservableList;
+    private ObservableList<DragQueen> dragQueenObservableList;
+    private boolean newClicked;
+    private DragQueen selectedQueen;
+    private DragQueenDAO dragQueenDAO;
+
+    private Button newButton;
+    private Button deleteButton;
+    private Button saveButton;
+    private Button backButton;
 
     public DragQueenController() {
         view = new DragQueenView();
         comboBox = view.getComboBox();
+        dragQueenDAO = MainApplication.getDragQueenDAO();
+        newClicked = true;
 
-        view.getBackButton().setOnAction(actionEvent -> handleSwitchScreen());
-        view.getEditButton().setOnAction(actionEvent -> handleEdit());
-        view.getNewButton().setOnAction(actionEvent -> handleNew());
-        view.getDeleteButton().setOnAction(actionEvent -> handleDelete());
-        view.getSaveButton().setOnAction(actionEvent -> handleSave());
+        newButton = view.getNewButton();
+        deleteButton = view.getDeleteButton();
+        saveButton = view.getSaveButton();
+        backButton = view.getBackButton();
+
+        newButton.setOnAction(actionEvent -> handleNew());
+        deleteButton.setOnAction(actionEvent -> handleDelete());
+        saveButton.setOnAction(actionEvent -> handleSave());
+        backButton.setOnAction(actionEvent -> handleSwitchScreen());
+
         view.getQueenList().setOnMouseClicked(onMouseClickedProperty -> handleListClick());
 
         setComboBox();
         setListView();
+        toggleButtonStates();
     }
 
     private void handleSwitchScreen() {
         switchController(new ShowController());
     }
 
-    private void handleEdit() {
-        useAlert("confirm", "Edit clicked");
-    }
-
     private void handleNew() {
-        useAlert("confirm", "New clicked");
+        view.getQueenList().getSelectionModel().clearSelection();
+        clearFields();
+        newClicked = true;
+        toggleButtonStates();
     }
 
     private void handleDelete() {
-        useAlert("confirm", "Delete clicked");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Are you sure you want to delete this queen?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK){
+            dragQueenDAO.remove(selectedQueen);
+            dragQueenObservableList.remove(selectedShow);
+            dragQueenDAO.remove(selectedQueen);
+            useAlert("inform", "Succesfully deleted queen");
+        }
+        view.getQueenList().getSelectionModel().clearSelection();
+        newClicked = true;
+        clearFields();
+
+        toggleButtonStates();
     }
 
     private void handleSave() {
@@ -65,6 +96,9 @@ public class DragQueenController extends Controller {
         String bio = view.getBioTextArea().getText();
         Show show = (Show) comboBox.getValue();
 
+        int castAge = 0;
+        double castSalary = 0;
+
 //        Boolean kidsFriendly = view.getCheckbox().isSelected();
 
         if (dragName.replaceAll("\\s+","").length() == 0) {
@@ -77,29 +111,55 @@ public class DragQueenController extends Controller {
             valid = false;
         }
 
+        if (show == null) {
+            alertString.append("- Setting a show is required \n");
+            valid = false;
+        }
+
             try {
-                int num = Integer.parseInt(age);
+                castAge = Integer.parseInt(age);
             } catch (NumberFormatException nfe) {
                 alertString.append("- Age has to be a non decimal number \n");
                 valid = false;
             }
+            if (castAge < 0) {
+                alertString.append("- Age has to be higher than 0 \n");
+                valid = false;
+            }
 
         try {
-            double num = Double.parseDouble(salary);
+            castSalary = Double.parseDouble(salary);
         } catch (NumberFormatException nfe) {
             alertString.append("- Salary has to be a decimal number \n");
             valid = false;
         }
 
+        if (castSalary < 0) {
+            alertString.append("- Salary has to be higher than 0 \n");
+            valid = false;
+        }
 
         if (valid == false) {
             useAlert("warn", alertString.toString());
         } else {
-            DragQueen dragQueen = new DragQueen(show, dragName, realName, Integer.parseInt(age), gender, homeTown, Double.parseDouble(salary), bio);
-
-            useAlert("inform", dragQueen.toString());
-
-            clearFields();
+            System.out.println(newClicked);
+            if (newClicked) {
+                DragQueen queenToAdd = new DragQueen(show, dragName, realName, Integer.parseInt(age), gender, homeTown, Double.parseDouble(salary), bio);
+                dragQueenObservableList.add(queenToAdd);
+                useAlert("inform", "Added a new show with the values: \n" + queenToAdd);
+                clearFields();
+            } else {
+                selectedQueen.setDragName(dragName);
+                selectedQueen.setRealName(realName);
+                selectedQueen.setAge(castAge);
+                selectedQueen.setGender(gender);
+                selectedQueen.setHomeTown(homeTown);
+                selectedQueen.setSalary(castSalary);
+                selectedQueen.setBio(bio);
+                selectedQueen.setBelongsTo(show);
+                view.getQueenList().refresh();
+                useAlert("inform", "Updated show");
+            }
         }
     }
 
@@ -111,13 +171,14 @@ public class DragQueenController extends Controller {
         view.getHomeTownTextField().clear();
         view.getSalaryTextField().clear();
         view.getBioTextArea().clear();
-        comboBox.setValue(null);
+        // Set combobox value to the currently selected show
+        comboBox.setValue(selectedShow);
     }
 
     private void handleListClick() {
-        DragQueen selectedQueen = view.getQueenList().getSelectionModel().getSelectedItem();
+        newClicked = false;
+        selectedQueen = view.getQueenList().getSelectionModel().getSelectedItem();
         if(selectedShow != null) {
-
             view.setDragNameTextField(selectedQueen.getDragName());
             view.setNameTextField(selectedQueen.getRealName());
             view.setAgeTextField(String.valueOf(selectedQueen.getAge()));
@@ -125,19 +186,29 @@ public class DragQueenController extends Controller {
             view.setHomeTownTextField(selectedQueen.getHomeTown());
             view.setSalaryTextField(String.valueOf(selectedQueen.getSalary()));
             view.setBioTextArea(selectedQueen.getBio());
-
         }
+        toggleButtonStates();
     }
 
     private void setListView(){
-        showObservableList = FXCollections.observableArrayList(getDragQueenDAO().getAllFor(selectedShow));
-        view.getQueenList().setItems(showObservableList);
+        dragQueenObservableList = FXCollections.observableArrayList(getDragQueenDAO().getAllFor(selectedShow));
+        view.getQueenList().setItems(dragQueenObservableList);
     }
 
     private void setComboBox(){
         comboBox.getItems().addAll(MainApplication.getShowDAO().getAll());
         comboBox.setValue(selectedShow);
 }
+
+    private void toggleButtonStates() {
+        if (view.getQueenList().getSelectionModel().getSelectedItem() != null) {
+            newButton.setDisable(false);
+            deleteButton.setDisable(false);
+        } else {
+            newButton.setDisable(true);
+            deleteButton.setDisable(true);
+        }
+    }
 
     @Override
     public View getView() {
