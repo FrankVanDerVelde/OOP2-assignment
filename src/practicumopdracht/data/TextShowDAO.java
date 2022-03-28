@@ -1,7 +1,5 @@
 package practicumopdracht.data;
 
-import practicumopdracht.MainApplication;
-import practicumopdracht.models.DragQueen;
 import practicumopdracht.models.Show;
 
 import java.io.File;
@@ -9,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Scanner;
 
 public class TextShowDAO extends ShowDAO {
@@ -20,6 +17,7 @@ public class TextShowDAO extends ShowDAO {
         try {
             PrintWriter pw = new PrintWriter(file);
             for (Show show : super.objects) {
+
                 pw.println(show.getName());
                 pw.println(show.getLocation());
                 pw.println(show.getDate());
@@ -42,6 +40,11 @@ public class TextShowDAO extends ShowDAO {
     public boolean load() {
         Scanner scanner = null;
         try {
+            // Try to create the file incase it doesn't exist
+            if (file.createNewFile()) {
+                System.out.println("File has been created because it did not exist while attempting to load.");
+            }
+
             scanner = new Scanner(file);
 
             while(scanner.hasNextLine()) {

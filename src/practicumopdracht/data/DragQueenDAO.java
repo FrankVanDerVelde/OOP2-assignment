@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DragQueenDAO implements DAO<DragQueen> {
+public abstract class DragQueenDAO implements DAO<DragQueen> {
 
     protected List<DragQueen> objects;
 

@@ -142,10 +142,9 @@ public class DragQueenController extends Controller {
         if (valid == false) {
             useAlert("warn", alertString.toString());
         } else {
-            System.out.println(newClicked);
             if (newClicked) {
                 DragQueen queenToAdd = new DragQueen(show, dragName, realName, Integer.parseInt(age), gender, homeTown, Double.parseDouble(salary), bio);
-                dragQueenObservableList.add(queenToAdd);
+                dragQueenDAO.addOrUpdate(queenToAdd);
                 useAlert("inform", "Added a new show with the values: \n" + queenToAdd);
                 clearFields();
             } else {
@@ -176,9 +175,9 @@ public class DragQueenController extends Controller {
     }
 
     private void handleListClick() {
-        newClicked = false;
         selectedQueen = view.getQueenList().getSelectionModel().getSelectedItem();
-        if(selectedShow != null) {
+        if(selectedQueen != null) {
+            newClicked = false;
             view.setDragNameTextField(selectedQueen.getDragName());
             view.setNameTextField(selectedQueen.getRealName());
             view.setAgeTextField(String.valueOf(selectedQueen.getAge()));

@@ -45,6 +45,10 @@ public class TextDragQueenDAO extends DragQueenDAO {
     public boolean load() {
         Scanner scanner = null;
         try {
+            // Try to create the file incase it doesn't exist
+            if (file.createNewFile()) {
+                System.out.println("File has been created because it did not exist while attempting to load.");
+            }
             scanner = new Scanner(file);
 
             while(scanner.hasNextLine()) {
@@ -68,6 +72,10 @@ public class TextDragQueenDAO extends DragQueenDAO {
         } catch (IOException e){
             e.printStackTrace();
             System.err.println("File already in use");
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Other exceptions");
             return false;
         }
     }

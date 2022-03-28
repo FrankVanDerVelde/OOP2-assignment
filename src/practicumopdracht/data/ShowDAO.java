@@ -5,7 +5,7 @@ import practicumopdracht.models.Show;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowDAO implements DAO<Show> {
+public abstract class ShowDAO implements DAO<Show> {
 
     protected List<Show> objects;
 

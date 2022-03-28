@@ -12,7 +12,7 @@ public class MainApplication extends Application {
     private final String TITLE = String.format("Practicumopdracht OOP2 - %s", Main.studentNaam);
     private final int WIDTH = 640;
     private final int HEIGHT = 600;
-    static final Stage stage = new Stage();
+    private static final Stage stage = new Stage();
     private static ShowDAO showDAO;
     private static DragQueenDAO dragQueenDAO;
 
@@ -30,13 +30,11 @@ public class MainApplication extends Application {
 
 //        MainApplication.showDAO = new DummyShowDAO();
 //        MainApplication.dragQueenDAO = new DummyDragQueenDAO();
-
-        MainApplication.showDAO = new TextShowDAO();
-MainApplication.dragQueenDAO = new TextDragQueenDAO();
-
-            dragQueenDAO.save();
 //        showDAO.load();
 //        dragQueenDAO.load();
+
+        MainApplication.showDAO = new TextShowDAO();
+        MainApplication.dragQueenDAO = new TextDragQueenDAO();
 
         MainApplication.stage.setTitle(TITLE);
         MainApplication.stage.setWidth(WIDTH);
@@ -56,4 +54,10 @@ MainApplication.dragQueenDAO = new TextDragQueenDAO();
     public static DragQueenDAO getDragQueenDAO() {
         return dragQueenDAO;
     }
+
+    public static Stage getStage() {
+        return stage;
+    }
+
+
 }

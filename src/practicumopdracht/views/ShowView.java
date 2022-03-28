@@ -2,6 +2,7 @@ package practicumopdracht.views;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -27,6 +28,14 @@ public class ShowView extends View {
     private Button deleteButton;
     private Button saveButton;
     private Button seeDetailButton;
+
+    private BorderPane borderPane;
+    private ToolBar toolBar;
+    private Menu menu;
+    private MenuBar menuBar;
+    private MenuItem loadMenuButton;
+    private MenuItem saveMenuButton;
+    private MenuItem closeMenuButton;
 
     private ListView<Show> showList;
 
@@ -60,6 +69,25 @@ public class ShowView extends View {
 
         showList = new ListView();
 
+        // File menu
+        borderPane = new BorderPane();
+        toolBar = new ToolBar();
+        menuBar = new MenuBar();
+        menu = new Menu("File");
+        loadMenuButton = new MenuItem("Load");
+        saveMenuButton = new MenuItem("Save");
+        closeMenuButton = new MenuItem("Close");
+
+        menu.getItems().addAll(
+                loadMenuButton,
+                saveMenuButton,
+                closeMenuButton
+        );
+
+        menuBar.getMenus().add(menu);
+        toolBar.getItems().add(menuBar);
+        borderPane.setTop(toolBar);
+
         gridpane.add(nameLabel, 1, 1);
         gridpane.add(nameTextField, 2, 1);
         gridpane.add(locationLabel, 1, 2);
@@ -77,6 +105,7 @@ public class ShowView extends View {
         );
 
         vbox.getChildren().addAll(
+                borderPane,
                 gridpane,
                 showList,
                 hbox
@@ -123,6 +152,20 @@ public class ShowView extends View {
         return showList;
     }
 
+    // file menu getters
+
+    public MenuItem getLoadMenuButton() {
+        return loadMenuButton;
+    }
+
+    public MenuItem getSaveMenuButton() {
+        return saveMenuButton;
+    }
+
+    public MenuItem getCloseMenuButton() {
+        return closeMenuButton;
+    }
+
     // Form fields setters
     public void setNameTextField(String name) {
         this.nameTextField.setText(name);
@@ -139,4 +182,5 @@ public class ShowView extends View {
     public void setCheckbox(Boolean kidsFriendly) {
         this.checkbox.setSelected(kidsFriendly);
     }
+
 }

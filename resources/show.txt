@@ -1,0 +1,12 @@
+Fempire
+Amsterdam
+2022-05-17
+true
+Drag Brunch
+Amsterdam
+2022-07-24
+true
+Sibling Rivalry
+New York
+2022-12-12
+false

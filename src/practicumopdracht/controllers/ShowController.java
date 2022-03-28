@@ -8,6 +8,7 @@ import javafx.scene.control.ButtonType;
 import practicumopdracht.MainApplication;
 import practicumopdracht.data.DAO;
 import practicumopdracht.data.DragQueenDAO;
+import practicumopdracht.data.ShowDAO;
 import practicumopdracht.models.DragQueen;
 import practicumopdracht.models.Show;
 import practicumopdracht.views.ShowView;
@@ -25,7 +26,8 @@ public class ShowController extends Controller {
     private ObservableList<Show> showObservableList;
     private Show selectedShow;
     private boolean newClicked;
-    private DAO<Show> showDAO;
+    private ShowDAO showDAO;
+    private DragQueenDAO dragQueenDAO;
 
     private Button newButton;
     private Button deleteButton;
@@ -34,7 +36,8 @@ public class ShowController extends Controller {
 
     public ShowController() {
     view = new ShowView();
-    showDAO =  MainApplication.getShowDAO();
+    showDAO = MainApplication.getShowDAO();
+    dragQueenDAO = MainApplication.getDragQueenDAO();
         newClicked = true;
 
         newButton = view.getNewButton();
@@ -47,6 +50,10 @@ public class ShowController extends Controller {
         saveButton.setOnAction(actionEvent -> handleSave());
         detailButton.setOnAction(actionEvent -> handleSwitchScreen());
 
+        view.getLoadMenuButton().setOnAction(actionEvent -> handleMenuLoadButtonClick());
+        view.getSaveMenuButton().setOnAction(actionEvent -> handleMenuSaveButtonClick());
+        view.getCloseMenuButton().setOnAction(actionEvent -> handleMenuCloseButtonClick());
+
         view.getShowList().setOnMouseClicked(onMouseClickedProperty -> handleListClick());
 
         setListView();
@@ -55,7 +62,6 @@ public class ShowController extends Controller {
 
     private void handleSwitchScreen() {
         Show selectedShow = view.getShowList().getSelectionModel().getSelectedItem();
-        System.out.println(selectedShow);
         if (selectedShow != null) {
             MainApplication.selectedShow = selectedShow;
             switchController(new DragQueenController());
@@ -75,7 +81,6 @@ public class ShowController extends Controller {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK){
-            DragQueenDAO dragQueenDAO = MainApplication.getDragQueenDAO();
             dragQueenDAO.getAllFor(selectedShow).forEach(dragQueenDAO::remove);
             showObservableList.remove(selectedShow);
             showDAO.remove(selectedShow);
@@ -121,12 +126,11 @@ public class ShowController extends Controller {
         } else {
             if (newClicked) {
                 Show showToAdd = new Show(name, location, date, kidsFriendly);
-                showObservableList.add(showToAdd);
+                showDAO.addOrUpdate(showToAdd);
+                setListView();
 
-//                view.getShowList().refresh();
                 clearFields();
                 useAlert("inform", "Added a new show with the values: \n" + showToAdd);
-
             } else {
                 selectedShow.setName(name);
                 selectedShow.setLocation(location);
@@ -177,6 +181,56 @@ public class ShowController extends Controller {
             newButton.setDisable(true);
             deleteButton.setDisable(true);
             detailButton.setDisable(true);
+        }
+    }
+
+    private void handleMenuLoadButtonClick() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Are you sure you want to load the show and dragqueen data?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK){
+            try {
+                showDAO.load();
+                dragQueenDAO.load();
+                setListView();
+                useAlert("inform", "Loading succesful");
+            } catch (Exception e) {
+                useAlert("inform", "Loading failed");
+            }
+        }
+    }
+
+    private void handleMenuSaveButtonClick() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Would you like to save the show and dragqueen data?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK){
+            try {
+                showDAO.save();
+                dragQueenDAO.save();
+                setListView();
+                useAlert("inform", "Saving succesful");
+            } catch (Exception e) {
+                useAlert("inform", "Saving failed");
+            }
+        }
+    }
+
+    private void handleMenuCloseButtonClick() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Are you sure you want to close the app?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            try {
+                handleMenuSaveButtonClick();
+                useAlert("inform", "Saving data succesful. App will now close");
+            } catch (Exception e) {
+                useAlert("inform", "Saving failed");
+            } finally {
+                MainApplication.getStage().close();
+            }
         }
     }
 
