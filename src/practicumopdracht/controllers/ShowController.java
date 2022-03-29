@@ -6,10 +6,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import practicumopdracht.MainApplication;
-import practicumopdracht.data.DAO;
+import practicumopdracht.comparators.KidsFriendlyComparator;
+import practicumopdracht.comparators.ShowDateComparator;
 import practicumopdracht.data.DragQueenDAO;
 import practicumopdracht.data.ShowDAO;
-import practicumopdracht.models.DragQueen;
 import practicumopdracht.models.Show;
 import practicumopdracht.views.ShowView;
 import practicumopdracht.views.View;
@@ -17,28 +17,34 @@ import practicumopdracht.views.View;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static javafx.scene.control.Alert.AlertType.INFORMATION;
-import static javafx.scene.control.Alert.AlertType.WARNING;
-import static practicumopdracht.MainApplication.*;
+import static javafx.scene.control.Alert.AlertType.*;
+import static practicumopdracht.MainApplication.getShowDAO;
+import static practicumopdracht.MainApplication.switchController;
 
+
+/**
+ *  The controller for dragqueens it has access to the accompanying view and manages its interactive components
+ *
+ * @ Author Frank van der Velde
+ */
 public class ShowController extends Controller {
 
-    private ShowView view;
+    private final ShowView view;
     private ObservableList<Show> showObservableList;
     private Show selectedShow;
     private boolean newClicked;
-    private ShowDAO showDAO;
-    private DragQueenDAO dragQueenDAO;
+    private final ShowDAO showDAO;
+    private final DragQueenDAO dragQueenDAO;
 
-    private Button newButton;
-    private Button deleteButton;
-    private Button saveButton;
-    private Button detailButton;
+    private final Button newButton;
+    private final Button deleteButton;
+    private final Button saveButton;
+    private final Button detailButton;
 
     public ShowController() {
-    view = new ShowView();
-    showDAO = MainApplication.getShowDAO();
-    dragQueenDAO = MainApplication.getDragQueenDAO();
+        view = new ShowView();
+        showDAO = MainApplication.getShowDAO();
+        dragQueenDAO = MainApplication.getDragQueenDAO();
         newClicked = true;
 
         newButton = view.getNewButton();
@@ -54,11 +60,26 @@ public class ShowController extends Controller {
         view.getLoadMenuButton().setOnAction(actionEvent -> handleMenuLoadButtonClick());
         view.getSaveMenuButton().setOnAction(actionEvent -> handleMenuSaveButtonClick());
         view.getCloseMenuButton().setOnAction(actionEvent -> handleMenuCloseButtonClick());
+        view.getSortAsc().setOnAction(actionEvent -> sortKidsFriendlyAscending());
+        view.getSortDesc().setOnAction(actionEvent -> sortKidsFriendlyDescending());
 
         view.getShowList().setOnMouseClicked(onMouseClickedProperty -> handleListClick());
 
         setListView();
         toggleButtonStates();
+        sortDateAscending();
+    }
+
+    private void sortDateAscending() {
+        FXCollections.sort(view.getShowList().getItems(), new ShowDateComparator());
+    }
+
+    private void sortKidsFriendlyAscending() {
+        FXCollections.sort(view.getShowList().getItems(), new KidsFriendlyComparator());
+    }
+
+    private void sortKidsFriendlyDescending() {
+        FXCollections.sort(view.getShowList().getItems(), new KidsFriendlyComparator().reversed());
     }
 
     private void handleSwitchScreen() {
@@ -76,11 +97,8 @@ public class ShowController extends Controller {
     }
 
     private void handleDelete() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Are you sure you want to delete this show?");
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (result.get() == ButtonType.OK){
+        Optional<ButtonType> result = useAlert(CONFIRMATION, "Are you sure you want to delete this show?").showAndWait();
+        if (result.get() == ButtonType.OK) {
             dragQueenDAO.getAllFor(selectedShow).forEach(dragQueenDAO::remove);
             showObservableList.remove(selectedShow);
             showDAO.remove(selectedShow);
@@ -92,6 +110,9 @@ public class ShowController extends Controller {
         toggleButtonStates();
     }
 
+    /**
+     * Handles the validating of form values and then either updates an existing or adds a new dragqueen
+     */
     private void handleSave() {
         Boolean inputFieldsValid = true;
         StringBuilder alertString = new StringBuilder();
@@ -101,12 +122,12 @@ public class ShowController extends Controller {
         LocalDate date = view.getDatePicker().getValue();
         Boolean kidsFriendly = view.getCheckbox().isSelected();
 
-        if (name.replaceAll("\\s+","").length() == 0) {
+        if (name.replaceAll("\\s+", "").length() == 0) {
             alertString.append("- Name is required \n");
             inputFieldsValid = false;
         }
 
-        if (location.replaceAll("\\s+","").length() == 0) {
+        if (location.replaceAll("\\s+", "").length() == 0) {
             alertString.append("- Location is required \n");
             inputFieldsValid = false;
         }
@@ -128,7 +149,6 @@ public class ShowController extends Controller {
                 Show showToAdd = new Show(name, location, date, kidsFriendly);
                 showDAO.addOrUpdate(showToAdd);
                 setListView();
-
                 clearFields();
                 useAlert(INFORMATION, "Added a new show with the values: \n" + showToAdd);
             } else {
@@ -152,7 +172,7 @@ public class ShowController extends Controller {
     private void handleListClick() {
         newClicked = false;
         selectedShow = view.getShowList().getSelectionModel().getSelectedItem();
-        if(selectedShow != null) {
+        if (selectedShow != null) {
 
             view.setNameTextField(selectedShow.getName());
             view.setLocationTextField(selectedShow.getLocation());
@@ -165,7 +185,7 @@ public class ShowController extends Controller {
     /**
      * Set de listview
      */
-    private void setListView(){
+    private void setListView() {
         showObservableList = FXCollections.observableArrayList(getShowDAO().getAll());
         view.getShowList().setItems(showObservableList);
     }
@@ -183,12 +203,16 @@ public class ShowController extends Controller {
         }
     }
 
+
+    /**
+     * Handles the click event of the Menu load button and then calls for the data to be loaded
+     */
     private void handleMenuLoadButtonClick() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("Are you sure you want to load the show and dragqueen data?");
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.get() == ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
             try {
                 showDAO.load();
                 dragQueenDAO.load();
@@ -200,12 +224,16 @@ public class ShowController extends Controller {
         }
     }
 
+
+    /**
+     * Handles the click event of the Menu save button and then calls for the data to be saved
+     */
     private void handleMenuSaveButtonClick() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("Would you like to save the show and dragqueen data?");
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.get() == ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
             try {
                 showDAO.save();
                 dragQueenDAO.save();
@@ -217,14 +245,16 @@ public class ShowController extends Controller {
         }
     }
 
+    /**
+     * Handles the click event of the Menu close button checks if the user wants to save the data then closes the app
+     */
     private void handleMenuCloseButtonClick() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("Are you sure you want to close the app?");
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
             try {
                 handleMenuSaveButtonClick();
-                useAlert(INFORMATION, "Saving data succesful. App will now close");
             } catch (Exception e) {
                 useAlert(INFORMATION, "Saving failed");
             } finally {

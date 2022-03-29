@@ -5,6 +5,11 @@ import practicumopdracht.models.Show;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  The abstract DAO that other shows are based off
+ *
+ * @ Author Frank van der Velde
+ */
 public abstract class ShowDAO implements DAO<Show> {
 
     protected List<Show> objects;
@@ -20,7 +25,7 @@ public abstract class ShowDAO implements DAO<Show> {
     public int getIdFor(Show object) {
         for (int i = 0; i < objects.size(); i++) {
             Show show = objects.get(i);
-            if(show.equals(object)){
+            if (show.equals(object)) {
                 return i;
             }
         }

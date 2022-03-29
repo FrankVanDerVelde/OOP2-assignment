@@ -10,6 +10,11 @@ import practicumopdracht.models.Show;
 
 import java.time.LocalDate;
 
+/**
+ * This view contains all of the front-end element for the show interface and it's getters and setters
+ *
+ * @author Frank van der Velde
+ */
 public class ShowView extends View {
 
     private Label nameLabel;
@@ -31,11 +36,17 @@ public class ShowView extends View {
 
     private BorderPane borderPane;
     private ToolBar toolBar;
-    private Menu menu;
     private MenuBar menuBar;
+
+
+    private Menu fileMenu;
     private MenuItem loadMenuButton;
     private MenuItem saveMenuButton;
     private MenuItem closeMenuButton;
+
+    private Menu sortingMenu;
+    private MenuItem sortAsc;
+    private MenuItem sortDesc;
 
     private ListView<Show> showList;
 
@@ -51,10 +62,10 @@ public class ShowView extends View {
         gridpane.setVgap(10);
 
         nameLabel = new Label("Name*");
-        nameTextField=new TextField();
+        nameTextField = new TextField();
 
         locationLabel = new Label("Location*");
-        locationTextField=new TextField();
+        locationTextField = new TextField();
 
         dateLabel = new Label("Date*");
         datePicker = new DatePicker();
@@ -73,18 +84,28 @@ public class ShowView extends View {
         borderPane = new BorderPane();
         toolBar = new ToolBar();
         menuBar = new MenuBar();
-        menu = new Menu("File");
+
         loadMenuButton = new MenuItem("Load");
         saveMenuButton = new MenuItem("Save");
         closeMenuButton = new MenuItem("Close");
 
-        menu.getItems().addAll(
+        fileMenu = new Menu("File");
+        fileMenu.getItems().addAll(
                 loadMenuButton,
                 saveMenuButton,
                 closeMenuButton
         );
 
-        menuBar.getMenus().add(menu);
+        sortingMenu = new Menu("Sort");
+        sortAsc = new MenuItem("Child Friendly (Yes-No)");
+        sortDesc = new MenuItem("Child Friendly (No-Yes)");
+
+        sortingMenu.getItems().addAll(
+                sortAsc,
+                sortDesc
+        );
+
+        menuBar.getMenus().addAll(fileMenu, sortingMenu);
         toolBar.getItems().add(menuBar);
         borderPane.setTop(toolBar);
 
@@ -136,23 +157,40 @@ public class ShowView extends View {
         return nameTextField;
     }
 
+    // Form fields setters
+    public void setNameTextField(String name) {
+        this.nameTextField.setText(name);
+    }
+
     public TextField getLocationTextField() {
         return locationTextField;
+    }
+
+    public void setLocationTextField(String location) {
+        this.locationTextField.setText(location);
     }
 
     public DatePicker getDatePicker() {
         return datePicker;
     }
 
+    // file menu getters
+
+    public void setDatePicker(LocalDate date) {
+        this.datePicker.setValue(date);
+    }
+
     public CheckBox getCheckbox() {
         return checkbox;
+    }
+
+    public void setCheckbox(Boolean kidsFriendly) {
+        this.checkbox.setSelected(kidsFriendly);
     }
 
     public ListView<Show> getShowList() {
         return showList;
     }
-
-    // file menu getters
 
     public MenuItem getLoadMenuButton() {
         return loadMenuButton;
@@ -166,21 +204,12 @@ public class ShowView extends View {
         return closeMenuButton;
     }
 
-    // Form fields setters
-    public void setNameTextField(String name) {
-        this.nameTextField.setText(name);
+    // Sort menu getters
+    public MenuItem getSortAsc() {
+        return sortAsc;
     }
 
-    public void setLocationTextField(String location) {
-        this.locationTextField.setText(location);
+    public MenuItem getSortDesc() {
+        return sortDesc;
     }
-
-    public void setDatePicker(LocalDate date) {
-        this.datePicker.setValue(date);
-    }
-
-    public void setCheckbox(Boolean kidsFriendly) {
-        this.checkbox.setSelected(kidsFriendly);
-    }
-
 }

@@ -9,45 +9,45 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+/**
+ *  The DAO that handles the text version of the show data
+ *
+ * @ Author Frank van der Velde
+ */
 public class TextShowDAO extends ShowDAO {
-    private File file = new File("resources/show.txt");
+    private final File file = new File("resources/show.txt");
 
     @Override
     public boolean save() {
         try {
             PrintWriter pw = new PrintWriter(file);
             for (Show show : super.objects) {
-
                 pw.println(show.getName());
                 pw.println(show.getLocation());
                 pw.println(show.getDate());
                 pw.println(show.getIsKidsFriendly());
             }
             pw.close();
-            return true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.err.println("Couldn't find file");
             return false;
-        } catch (IOException e){
-            e.printStackTrace();
-            System.err.println("File already in use");
-            return false;
         }
+        return true;
     }
 
     @Override
     public boolean load() {
-        Scanner scanner = null;
         try {
-            // Try to create the file incase it doesn't exist
+            /**
+             * Try to create the file incase it doesn't exist
+             */
             if (file.createNewFile()) {
                 System.out.println("File has been created because it did not exist while attempting to load.");
             }
+            Scanner scanner = new Scanner(file);
 
-            scanner = new Scanner(file);
-
-            while(scanner.hasNextLine()) {
+            while (scanner.hasNextLine()) {
                 String name = scanner.nextLine();
                 String location = scanner.nextLine();
                 LocalDate date = LocalDate.parse(scanner.nextLine());
@@ -60,11 +60,10 @@ public class TextShowDAO extends ShowDAO {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.err.println("Couldn't find file");
-            return false;
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             System.err.println("File already in use");
-            return false;
         }
+        return false;
     }
 }

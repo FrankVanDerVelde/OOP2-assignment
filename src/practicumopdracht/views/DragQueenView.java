@@ -6,10 +6,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import practicumopdracht.models.DragQueen;
-import practicumopdracht.models.Show;
 
-import java.time.LocalDate;
-
+/**
+ * This view contains all of the front-end element for the dragqueen interface and it's getters and setters
+ *
+ * @author Frank van der Velde
+ */
 public class DragQueenView extends View {
 
     // Labels and their inputs
@@ -44,6 +46,15 @@ public class DragQueenView extends View {
     private Button saveButton;
     private Button backButton;
 
+    // radio buttons
+    private HBox radioButtonContainer;
+    private Label radioButtonLabel;
+    private ToggleGroup radioGroup;
+    private RadioButton sortSalaryAsc;
+    private RadioButton sortSalaryDesc;
+    private RadioButton sortAgeAndGenderAsc;
+    private RadioButton getSortAgeAndGenderDesc;
+
     @Override
     protected void initializeView() {
         VBox vbox = new VBox();
@@ -57,7 +68,6 @@ public class DragQueenView extends View {
 
         Label partOfLabel = new Label("Part of");
         partOfComboBox = new ComboBox();
-//        partOfComboBox.getItems().addAll(new Show("Show 1", "Amsterdam", LocalDate.now(), true));
 
         newButton = new Button("New");
         deleteButton = new Button("Delete");
@@ -104,6 +114,32 @@ public class DragQueenView extends View {
 
         queenList = new ListView();
 
+        radioButtonContainer = new HBox();
+        radioGroup = new ToggleGroup();
+        radioButtonLabel = new Label("Sorting: ");
+
+        sortSalaryAsc = new RadioButton("Salary (0-9)");
+        sortSalaryAsc.setToggleGroup(radioGroup);
+
+        sortSalaryDesc = new RadioButton("Salary (9-0)");
+        sortSalaryDesc.setToggleGroup(radioGroup);
+
+        sortAgeAndGenderAsc = new RadioButton("Age (0-9)");
+        sortAgeAndGenderAsc.setToggleGroup(radioGroup);
+        sortAgeAndGenderAsc.setSelected(true);
+
+        getSortAgeAndGenderDesc = new RadioButton("Age (9-0)");
+        getSortAgeAndGenderDesc.setToggleGroup(radioGroup);
+
+        radioButtonContainer.getChildren().addAll(
+                radioButtonLabel,
+                sortSalaryAsc,
+                sortSalaryDesc,
+                sortAgeAndGenderAsc,
+                getSortAgeAndGenderDesc);
+
+        radioButtonContainer.setSpacing(10);
+
         hbox.getChildren().addAll(
                 newButton,
                 deleteButton,
@@ -114,7 +150,8 @@ public class DragQueenView extends View {
         vbox.getChildren().addAll(
                 gridpane,
                 queenList,
-                hbox
+                hbox,
+                radioButtonContainer
         );
 
         root = vbox;
@@ -142,28 +179,57 @@ public class DragQueenView extends View {
         return dragNameTextField;
     }
 
+    // Form field setters
+    public void setDragNameTextField(String dragNameTextField) {
+        this.dragNameTextField.setText(dragNameTextField);
+    }
+
     public TextField getNameTextField() {
         return nameTextField;
+    }
+
+    public void setNameTextField(String nameTextField) {
+        this.nameTextField.setText(nameTextField);
     }
 
     public TextField getAgeTextField() {
         return ageTextField;
     }
 
+    public void setAgeTextField(String ageTextField) {
+        this.ageTextField.setText(ageTextField);
+    }
+
     public TextField getGenderTextField() {
         return genderTextField;
+    }
+
+    public void setGenderTextField(String genderTextField) {
+        this.genderTextField.setText(genderTextField);
     }
 
     public TextField getHomeTownTextField() {
         return homeTownTextField;
     }
 
+    public void setHomeTownTextField(String homeTownTextField) {
+        this.homeTownTextField.setText(homeTownTextField);
+    }
+
     public TextField getSalaryTextField() {
         return salaryTextField;
     }
 
+    public void setSalaryTextField(String salaryTextField) {
+        this.salaryTextField.setText(salaryTextField);
+    }
+
     public TextArea getBioTextArea() {
         return bioTextArea;
+    }
+
+    public void setBioTextArea(String bioTextArea) {
+        this.bioTextArea.setText(bioTextArea);
     }
 
     public ComboBox getComboBox() {
@@ -174,33 +240,24 @@ public class DragQueenView extends View {
         return queenList;
     }
 
-    // Form field setters
-    public void setDragNameTextField(String dragNameTextField) {
-        this.dragNameTextField.setText(dragNameTextField);
+    // Radio button getters
+    public Label getDragNameLabel() {
+        return dragNameLabel;
     }
 
-    public void setNameTextField(String nameTextField) {
-        this.nameTextField.setText(nameTextField);
+    public RadioButton getSortSalaryAsc() {
+        return sortSalaryAsc;
     }
 
-    public void setAgeTextField(String ageTextField) {
-        this.ageTextField.setText(ageTextField);
+    public RadioButton getSortSalaryDesc() {
+        return sortSalaryDesc;
     }
 
-    public void setGenderTextField(String genderTextField) {
-        this.genderTextField.setText(genderTextField);
+    public RadioButton getSortAgeAndGenderAsc() {
+        return sortAgeAndGenderAsc;
     }
 
-    public void setHomeTownTextField(String homeTownTextField) {
-        this.homeTownTextField.setText(homeTownTextField);
+    public RadioButton getGetSortAgeAndGenderDesc() {
+        return getSortAgeAndGenderDesc;
     }
-
-    public void setSalaryTextField(String salaryTextField) {
-        this.salaryTextField.setText(salaryTextField);
-    }
-
-    public void setBioTextArea(String bioTextArea) {
-        this.bioTextArea.setText(bioTextArea);
-    }
-
 }

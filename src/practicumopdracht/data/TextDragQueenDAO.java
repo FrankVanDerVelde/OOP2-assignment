@@ -10,9 +10,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+/**
+ *  The DAO that handles the text version of the dragqueen data
+ *
+ * @ Author Frank van der Velde
+ */
 public class TextDragQueenDAO extends DragQueenDAO {
 
-    private File file = new File("resources/dragqueen.txt");
+    private final File file = new File("resources/dragQueen.txt");
 
     @Override
     public boolean save() {
@@ -40,17 +45,23 @@ public class TextDragQueenDAO extends DragQueenDAO {
 
     @Override
     public boolean load() {
-        Scanner scanner = null;
         try {
-            // Try to create the file incase it doesn't exist
+            /**
+             * Try to create the file incase it doesn't exist
+             */
             if (file.createNewFile()) {
                 System.out.println("File has been created because it did not exist while attempting to load.");
             }
-            scanner = new Scanner(file);
+            Scanner scanner = new Scanner(file);
 
-            while(scanner.hasNextLine()) {
-                // try catch
-                Show belongsTo = MainApplication.getShowDAO().getById(Integer.parseInt(scanner.nextLine()));
+            while (scanner.hasNextLine()) {
+                Show belongsTo = null;
+                try  {
+                    belongsTo = MainApplication.getShowDAO().getById(Integer.parseInt(scanner.nextLine()));
+                } catch (Exception e) {
+                    System.err.println("Error while parsing dragqueen belongs to");
+                }
+
                 String dragName = scanner.nextLine();
                 String realName = scanner.nextLine();
                 int age = Integer.parseInt(scanner.nextLine());
@@ -66,12 +77,12 @@ public class TextDragQueenDAO extends DragQueenDAO {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.err.println("Couldn't find file");
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             System.err.println("File already in use");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Other exceptions");
+            System.out.println("Other when loading dragqueen text");
         }
 
         return false;

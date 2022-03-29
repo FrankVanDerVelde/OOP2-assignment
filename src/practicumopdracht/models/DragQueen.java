@@ -1,7 +1,15 @@
 package practicumopdracht.models;
 
-public class DragQueen {
-    Show belongsTo;
+import java.io.Serializable;
+
+
+/**
+ * This model defines what a dragqueen looks like and what its data types are
+ *
+ * @author Frank van der Velde
+ */
+public class DragQueen implements Serializable {
+    transient Show belongsTo;
     String dragName;
     String realName;
     int age;
@@ -25,28 +33,56 @@ public class DragQueen {
         return dragName;
     }
 
+    public void setDragName(String dragName) {
+        this.dragName = dragName;
+    }
+
     public String getRealName() {
         return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public int getAge() {
         return age;
     }
 
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     public String getGender() {
         return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getHomeTown() {
         return homeTown;
     }
 
+    public void setHomeTown(String homeTown) {
+        this.homeTown = homeTown;
+    }
+
     public double getSalary() {
         return salary;
     }
 
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
     public String getBio() {
         return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public Show getBelongsTo() {
@@ -56,34 +92,6 @@ public class DragQueen {
     // setters
     public void setBelongsTo(Show belongsTo) {
         this.belongsTo = belongsTo;
-    }
-
-    public void setDragName(String dragName) {
-        this.dragName = dragName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public void setHomeTown(String homeTown) {
-        this.homeTown = homeTown;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
     }
 
     @Override

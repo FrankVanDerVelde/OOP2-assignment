@@ -6,6 +6,11 @@ import practicumopdracht.models.Show;
 
 import java.util.List;
 
+/**
+ *  The DAO with dummy dragqueen data for testing
+ *
+ * @ Author Frank van der Velde
+ */
 public class DummyDragQueenDAO extends DragQueenDAO {
     @Override
     public boolean save() {
