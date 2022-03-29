@@ -29,16 +29,13 @@ public class TextDragQueenDAO extends DragQueenDAO {
                 pw.println(dragQueen.getBio());
             }
             pw.close();
-            return true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.err.println("Couldn't find file");
             return false;
-        } catch (IOException e){
-            e.printStackTrace();
-            System.err.println("File already in use");
-            return false;
         }
+
+        return true;
     }
 
     @Override
@@ -52,6 +49,7 @@ public class TextDragQueenDAO extends DragQueenDAO {
             scanner = new Scanner(file);
 
             while(scanner.hasNextLine()) {
+                // try catch
                 Show belongsTo = MainApplication.getShowDAO().getById(Integer.parseInt(scanner.nextLine()));
                 String dragName = scanner.nextLine();
                 String realName = scanner.nextLine();
@@ -68,15 +66,14 @@ public class TextDragQueenDAO extends DragQueenDAO {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.err.println("Couldn't find file");
-            return false;
         } catch (IOException e){
             e.printStackTrace();
             System.err.println("File already in use");
-            return false;
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Other exceptions");
-            return false;
         }
+
+        return false;
     }
 }

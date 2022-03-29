@@ -15,6 +15,7 @@ import practicumopdracht.views.View;
 
 import java.util.Optional;
 
+import static javafx.scene.control.Alert.AlertType.*;
 import static practicumopdracht.MainApplication.*;
 
 public class DragQueenController extends Controller {
@@ -31,11 +32,14 @@ public class DragQueenController extends Controller {
     private Button saveButton;
     private Button backButton;
 
-    public DragQueenController() {
+    private Show selectedShow;
+
+    public DragQueenController(Show show) {
         view = new DragQueenView();
         comboBox = view.getComboBox();
         dragQueenDAO = MainApplication.getDragQueenDAO();
         newClicked = true;
+        selectedShow = show;
 
         newButton = view.getNewButton();
         deleteButton = view.getDeleteButton();
@@ -66,15 +70,17 @@ public class DragQueenController extends Controller {
     }
 
     private void handleDelete() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Are you sure you want to delete this queen?");
-        Optional<ButtonType> result = alert.showAndWait();
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setContentText("Are you sure you want to delete this queen?");
+//        Optional<ButtonType> result = alert.showAndWait();
+
+        Optional<ButtonType> result = useAlert(CONFIRMATION, "confirm selection").showAndWait();
 
         if (result.get() == ButtonType.OK){
             dragQueenDAO.remove(selectedQueen);
             dragQueenObservableList.remove(selectedShow);
             dragQueenDAO.remove(selectedQueen);
-            useAlert("inform", "Succesfully deleted queen");
+            useAlert(INFORMATION, "Succesfully deleted queen");
         }
         view.getQueenList().getSelectionModel().clearSelection();
         newClicked = true;
@@ -140,12 +146,12 @@ public class DragQueenController extends Controller {
         }
 
         if (valid == false) {
-            useAlert("warn", alertString.toString());
+            useAlert(WARNING, alertString.toString());
         } else {
             if (newClicked) {
                 DragQueen queenToAdd = new DragQueen(show, dragName, realName, Integer.parseInt(age), gender, homeTown, Double.parseDouble(salary), bio);
                 dragQueenDAO.addOrUpdate(queenToAdd);
-                useAlert("inform", "Added a new show with the values: \n" + queenToAdd);
+                useAlert(INFORMATION, "Added a new show with the values: \n" + queenToAdd);
                 clearFields();
             } else {
                 selectedQueen.setDragName(dragName);
@@ -157,7 +163,7 @@ public class DragQueenController extends Controller {
                 selectedQueen.setBio(bio);
                 selectedQueen.setBelongsTo(show);
                 view.getQueenList().refresh();
-                useAlert("inform", "Updated show");
+                useAlert(INFORMATION, "Updated show");
             }
         }
     }

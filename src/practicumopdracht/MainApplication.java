@@ -16,7 +16,7 @@ public class MainApplication extends Application {
     private static ShowDAO showDAO;
     private static DragQueenDAO dragQueenDAO;
 
-    public static Show selectedShow;
+//    public static Show selectedShow;
 
     @Override
     public void start(Stage stage) {

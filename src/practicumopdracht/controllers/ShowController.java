@@ -17,8 +17,9 @@ import practicumopdracht.views.View;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static javafx.scene.control.Alert.AlertType.INFORMATION;
+import static javafx.scene.control.Alert.AlertType.WARNING;
 import static practicumopdracht.MainApplication.*;
-import static practicumopdracht.MainApplication.selectedShow;
 
 public class ShowController extends Controller {
 
@@ -63,8 +64,7 @@ public class ShowController extends Controller {
     private void handleSwitchScreen() {
         Show selectedShow = view.getShowList().getSelectionModel().getSelectedItem();
         if (selectedShow != null) {
-            MainApplication.selectedShow = selectedShow;
-            switchController(new DragQueenController());
+            switchController(new DragQueenController(selectedShow));
         }
     }
 
@@ -84,7 +84,7 @@ public class ShowController extends Controller {
             dragQueenDAO.getAllFor(selectedShow).forEach(dragQueenDAO::remove);
             showObservableList.remove(selectedShow);
             showDAO.remove(selectedShow);
-            useAlert("inform", "Succesfully deleted show");
+            useAlert(INFORMATION, "Succesfully deleted show");
         }
         view.getShowList().getSelectionModel().clearSelection();
         newClicked = true;
@@ -122,7 +122,7 @@ public class ShowController extends Controller {
         }
 
         if (inputFieldsValid == false) {
-            useAlert("warn", alertString.toString());
+            useAlert(WARNING, alertString.toString());
         } else {
             if (newClicked) {
                 Show showToAdd = new Show(name, location, date, kidsFriendly);
@@ -130,14 +130,14 @@ public class ShowController extends Controller {
                 setListView();
 
                 clearFields();
-                useAlert("inform", "Added a new show with the values: \n" + showToAdd);
+                useAlert(INFORMATION, "Added a new show with the values: \n" + showToAdd);
             } else {
                 selectedShow.setName(name);
                 selectedShow.setLocation(location);
                 selectedShow.setDate(date);
                 selectedShow.setKidsFriendly(kidsFriendly);
                 view.getShowList().refresh();
-                useAlert("inform", "Updated show");
+                useAlert(INFORMATION, "Updated show");
             }
         }
     }
@@ -152,7 +152,6 @@ public class ShowController extends Controller {
     private void handleListClick() {
         newClicked = false;
         selectedShow = view.getShowList().getSelectionModel().getSelectedItem();
-        MainApplication.selectedShow = selectedShow;
         if(selectedShow != null) {
 
             view.setNameTextField(selectedShow.getName());
@@ -194,9 +193,9 @@ public class ShowController extends Controller {
                 showDAO.load();
                 dragQueenDAO.load();
                 setListView();
-                useAlert("inform", "Loading succesful");
+                useAlert(INFORMATION, "Loading succesful");
             } catch (Exception e) {
-                useAlert("inform", "Loading failed");
+                useAlert(INFORMATION, "Loading failed");
             }
         }
     }
@@ -211,9 +210,9 @@ public class ShowController extends Controller {
                 showDAO.save();
                 dragQueenDAO.save();
                 setListView();
-                useAlert("inform", "Saving succesful");
+                useAlert(INFORMATION, "Saving succesful");
             } catch (Exception e) {
-                useAlert("inform", "Saving failed");
+                useAlert(INFORMATION, "Saving failed");
             }
         }
     }
@@ -225,9 +224,9 @@ public class ShowController extends Controller {
         if (result.get() == ButtonType.OK){
             try {
                 handleMenuSaveButtonClick();
-                useAlert("inform", "Saving data succesful. App will now close");
+                useAlert(INFORMATION, "Saving data succesful. App will now close");
             } catch (Exception e) {
-                useAlert("inform", "Saving failed");
+                useAlert(INFORMATION, "Saving failed");
             } finally {
                 MainApplication.getStage().close();
             }
